@@ -33,7 +33,7 @@
 					</div>
 
 					<h3>
-						Welcome Teacher1
+						Welcome {{$sessionId}}
 					</h3> 
 					<button type="button" class="btn btn-primary btn-lg">
 						Generate Student History

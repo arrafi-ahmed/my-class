@@ -28,7 +28,8 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
-								<form method="post" name="teacher">
+								<form method="post" action="registerTeacher" enctype="multipart/form-data" name="teacher">
+									@csrf
 									<div class="form-group">
 										 
 										<label for="exampleInputEmail1">
@@ -86,12 +87,14 @@
 										</label>
 									</div> 
 									<button type="submit" class="btn btn-primary">
-										Submit
+										Register
 									</button>
 								</form>
 							</div>
+
 							<div class="tab-pane" id="tab2">
-								<form method="post" name="student">
+								<form method="post" action="registerStudent" enctype="multipart/form-data" name="student">
+									@csrf
 									<div class="form-group">
 										 
 										<label for="exampleInputEmail1">
@@ -118,7 +121,7 @@
 										<label for="exampleInputPassword1">
 											Department
 										</label>
-										<input type="text" class="form-control" name="department" />
+										<input type="text" class="form-control" name="dept" />
 									</div>
 									<div class="form-group">
 										 
@@ -149,7 +152,7 @@
 										</label>
 									</div> 
 									<button type="submit" class="btn btn-primary">
-										Submit
+										Register
 									</button>
 								</form>
 							</div>

@@ -8,7 +8,7 @@
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-		<title>Register Account</title>
+		<title>Login</title>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -25,10 +25,14 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#tab2" data-toggle="tab">Student</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#tab3" data-toggle="tab">Admin</a>
+							</li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
-								<form method="post" name="teacher">
+								<form method="post" action="loginTeacher" name="teacher">
+									@csrf
 									<div class="form-group">
 										 
 										<label for="exampleInputEmail1">
@@ -45,18 +49,19 @@
 									</div>
 									
 									<button type="submit" class="btn btn-primary">
-										Submit
+										Login
 									</button>
 								</form>
 							</div>
 							<div class="tab-pane" id="tab2">
-								<form method="post" name="student">
+								<form method="post" action="loginStudent" name="student">
+									@csrf
 									<div class="form-group">
 										 
 										<label for="exampleInputEmail1">
 											Student ID
 										</label>
-										<input type="email" class="form-control" id="exampleInputEmail1" name="studentId" />
+										<input type="text" class="form-control" id="exampleInputEmail1" name="studentId" />
 									</div>
 									<div class="form-group">
 										 
@@ -67,7 +72,31 @@
 									</div>
 									
 									<button type="submit" class="btn btn-primary">
-										Submit
+										Login
+									</button>
+								</form>
+							</div>
+
+							<div class="tab-pane" id="tab3">
+								<form method="post" action="loginAdmin" name="admin">
+									@csrf
+									<div class="form-group">
+										 
+										<label for="exampleInputEmail1">
+											Admin ID
+										</label>
+										<input type="text" class="form-control" id="exampleInputEmail1" name="adminId" />
+									</div>
+									<div class="form-group">
+										 
+										<label for="exampleInputPassword1">
+											Password
+										</label>
+										<input type="password" class="form-control" id="exampleInputPassword1" name="password" />
+									</div>
+									
+									<button type="submit" class="btn btn-primary">
+										Login
 									</button>
 								</form>
 							</div>

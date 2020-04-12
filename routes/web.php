@@ -13,13 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/register', function () {
-    return view('register');
-});
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/teacher', function () {
+Route::get ('/register',  		 'RegisterController@index')->name('register.index');
+Route::post('/registerTeacher',  'RegisterController@createTeacher');
+Route::post('/registerStudent',  'RegisterController@createStudent');
+
+Route::get ('/login', 			 'LoginController@index')->name('login.index');
+Route::get ('/logout', 			 'LogoutController@index')->name('logout.index');
+Route::post('/loginTeacher', 	 'LoginController@loginTeacher');
+Route::post('/loginStudent', 	 'LoginController@loginStudent');
+Route::post('/loginAdmin', 		 'LoginController@loginAdmin');
+
+Route::get('/teacher-dashboard', 'TeacherDashboardController@index')->name('teacherDashboard.index');
+Route::get('/student-dashboard', 'StudentDashboardController@index')->name('studentDashboard.index');
+Route::get('/admin-dashboard', 	 'AdminDashboardController@index')->name('adminDashboard.index');
+
+Route::get ('/teacher', function () {
     return view('teacher');
 });
 Route::get('/student', function () {
@@ -39,15 +47,6 @@ Route::get('/update-course', function () {
 });
 Route::get('/course-dashboard', function () {
     return view('course-dashboard');
-});
-Route::get('/student-dashboard', function () {
-    return view('student-dashboard');
-});
-Route::get('/teacher-dashboard', function () {
-    return view('teacher-dashboard');
-});
-Route::get('/admin-dashboard', function () {
-    return view('admin-dashboard');
 });
 Route::get('/make-payment', function () {
     return view('make-payment');
