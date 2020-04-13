@@ -22,6 +22,7 @@
 									Create Course
 								</h3>
 								<form method="post">
+									@csrf
 									<div class="form-group">
 										 
 										<label for="exampleInputEmail1">
@@ -34,28 +35,35 @@
 										<label for="exampleInputEmail1">
 											Section
 										</label>
-										<input type="text" class="form-control" name="Section" />
+										<input type="text" class="form-control" name="section" />
 									</div>
 									<div class="form-group">
 										 
 										<label for="exampleInputPassword1">
 											Time
 										</label>
-										<input type="password" class="form-control" name="Time" />
+										<input type="text" class="form-control" name="time" />
 									</div>
 									<div class="form-group">
 										 
 										<label for="exampleInputPassword1">
 											Room No
 										</label>
-										<input type="password" class="form-control" name="roomNo" />
+										<input type="text" class="form-control" name="roomNo" />
 									</div>
 									<div class="form-group">
 										 
 										<label for="exampleInputPassword1">
 											Capacity
 										</label>
-										<input type="password" class="form-control" name="capacity" />
+										<input type="text" class="form-control" name="capacity" />
+									</div>
+									<div class="form-group">
+										 
+										<label for="exampleInputPassword1">
+											Teacher ID
+										</label>
+										<input type="text" class="form-control" name="teacherId" />
 									</div>
 									<button type="submit" class="btn btn-primary">
 										Create

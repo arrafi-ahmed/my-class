@@ -17,54 +17,56 @@
 					<h2>Edit Teacher Account</h2>
 
 					<form method="post" name="teacher">
+						@csrf
 						<div class="form-group">
 							 
 							<label for="exampleInputEmail1">
 								Id
 							</label>
-							<input type="text" class="form-control" name="teacherId" readonly />
+							<input type="text" class="form-control" name="id" readonly value="{{$teacher->id}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputPassword1">
 								Password
 							</label>
-							<input type="password" class="form-control" name="password" />
+							<input type="password" class="form-control" name="password" value="{{$teacher->password}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputPassword1">
 								Name
 							</label>
-							<input type="text" class="form-control" name="name" />
+							<input type="text" class="form-control" name="name" value="{{$teacher->name}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputPassword1">
 								Department
 							</label>
-							<input type="text" class="form-control" name="dept" />
+							<input type="text" class="form-control" name="dept" value="{{$teacher->dept}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputPassword1">
 								Qualification
 							</label>
-							<input type="text" class="form-control" name="qualification" />
+							<input type="text" class="form-control" name="qualification" value="{{$teacher->qualification}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputEmail1">
 								Email address
 							</label>
-							<input type="email" class="form-control" name="email" />
+							<input type="email" class="form-control" name="email" value="{{$teacher->email}}"/>
 						</div>
 						<div class="form-group">
 							 
 							<label for="exampleInputFile">
 								Profile Photo
-							</label>
-							<input type="file" class="form-control-file" name="profilePhoto" />
+							</label><br>
+							<img src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}" class="img-thumbnail">
+							<!-- <input type="file" class="form-control-file" name="profilePhoto" value="{{$teacher->profilePhoto}}"/> -->
 							
 						</div>
 						<button type="submit" class="btn btn-primary">

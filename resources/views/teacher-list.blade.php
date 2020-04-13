@@ -8,84 +8,72 @@
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-		<title>Student Dashboard</title>
+		<title>Teachers List</title>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="search-student">
-						<form method="post">
-							<div class="input-group mb-3">
-							  <input type="text" class="form-control" placeholder="Place course ID" aria-label="Recipient's username" aria-describedby="basic-addon2" name="searchResult">
-							  <div class="input-group-append">
-							    <button class="btn btn-primary" type="submit">Search Grade</button>
-							  </div>
-							</div>
-						</form>
-					</div>
-
 					<h3>
-						Welcome Student1
+						Teachers List
 					</h3> 
-					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg">
-						Generate Student History
-					</button></a>
-					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg">
-						Make Payment
-					</button></a>
-					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg">
-						Course List
-					</button></a>
-					<br><br>
-
-					<h4>Enrolled Courses:</h4>
+					
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									Course ID
+									ID
 								</th>
 								<th>
 									Name
 								</th>
 								<th>
-									Section
+									Dept
 								</th>
 								<th>
-									Time
+									Status
+								</th>
+								<th>
+									Action
 								</th>
 							</tr>
 						</thead>
 						<tbody>
+							@foreach ($teachers as $teacher)
 							<tr>
 								<td>
-									1
+									{{$teacher->id}}
 								</td>
 								<td>
-									<a href="#"> Intro to Math</a>
+									{{$teacher->name}}
 								</td>
 								<td>
-									G
+									{{$teacher->dept}}
 								</td>
 								<td>
-									Mon 01/04/2012
+									{{$teacher->valid ? "Approved" : "Blocked"}}
+								</td>
+								<td>
+									<form method="post">
+
+										@csrf
+										<button type="submit" name="approve" value="{{$teacher->id}}" class="btn btn-success">
+											Approve
+										</button>
+										
+										<button type="submit" name="block" value="{{$teacher->id}}" class="btn btn-warning">
+											Block
+										</button>
+										
+										<button type="submit" name="delete" value="{{$teacher->id}}" class="btn btn-danger">
+											Delete
+										</button>
+
+									</form>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									2
-								</td>
-								<td>
-									<a href="#"> Intro to English</a>
-								</td>
-								<td>
-									C
-								</td>
-								<td>
-									Mon 08/04/2012
-								</td>
-							</tr>
+							@endforeach
+							
 						</tbody>
 					</table>
 				</div>

@@ -35,7 +35,7 @@
 										<label for="exampleInputEmail1">
 											Id
 										</label>
-										<input type="text" class="form-control" name="teacherId" />
+										<input type="text" class="form-control" name="id" />
 									</div>
 									<div class="form-group">
 										 
@@ -100,7 +100,7 @@
 										<label for="exampleInputEmail1">
 											Id
 										</label>
-										<input type="text" class="form-control" name="studentId" />
+										<input type="text" class="form-control" name="id" />
 									</div>
 									<div class="form-group">
 										 

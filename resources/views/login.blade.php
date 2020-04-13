@@ -38,7 +38,7 @@
 										<label for="exampleInputEmail1">
 											Teacher ID
 										</label>
-										<input type="text" class="form-control" id="exampleInputEmail1" name="teacherId" />
+										<input type="text" class="form-control" id="exampleInputEmail1" name="id" />
 									</div>
 									<div class="form-group">
 										 
@@ -61,7 +61,7 @@
 										<label for="exampleInputEmail1">
 											Student ID
 										</label>
-										<input type="text" class="form-control" id="exampleInputEmail1" name="studentId" />
+										<input type="text" class="form-control" id="exampleInputEmail1" name="id" />
 									</div>
 									<div class="form-group">
 										 
@@ -85,7 +85,7 @@
 										<label for="exampleInputEmail1">
 											Admin ID
 										</label>
-										<input type="text" class="form-control" id="exampleInputEmail1" name="adminId" />
+										<input type="text" class="form-control" id="exampleInputEmail1" name="id" />
 									</div>
 									<div class="form-group">
 										 

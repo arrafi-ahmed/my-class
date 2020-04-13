@@ -35,12 +35,16 @@
 					<h3>
 						Welcome {{$sessionId}}
 					</h3> 
-					<button type="button" class="btn btn-primary btn-lg">
+					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Student History
-					</button>
-					<button type="button" class="btn btn-primary btn-lg">
+					</button></a>
+					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Good Grade Student List
-					</button><br><br>
+					</button></a>
+					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
+						Course List
+					</button></a>
+					<br><br>
 
 					<h4>Teaching Courses:</h4>
 					<table class="table">

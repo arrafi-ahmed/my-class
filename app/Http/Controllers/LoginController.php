@@ -14,40 +14,59 @@ class LoginController extends Controller
 
     public function loginTeacher(Request $req)
     {
-    	$loginTeacher = DB::table('teacher') -> where('teacherId', $req->teacherId)
-    										 ->	where('password', $req->password);
+    	$loginTeacher = DB::table('teacher') -> where('id', $req->id)
+    										 ->	where('password', $req->password)
+                                             -> where('valid', 1)
+                                             -> first();
+        
+        if ($loginTeacher) 
+        {
+        	$req-> session()->put('id', $req->id);
+        	$req-> session()->put('type', 'teacher');
 
-		 if ($loginTeacher) {
-		 	$req-> session()->put('id', $req->teacherId);
-		 	$req-> session()->put('type', 'teacher');
-
-		 	return redirect()->route('teacherDashboard.index');
-		 }
+        	return redirect()->route('teacherDashboard.index');
+        }
+        else
+        {
+        return redirect()->route('login.index');
+        }
     }
 
     public function loginStudent(Request $req)
     {
-    	$loginStudent = DB::table('student') -> where('studentId', $req->studentId)
-    										 ->	where('password', $req->password);
+    	$loginStudent = DB::table('student') -> where('id', $req->id)
+    										 ->	where('password', $req->password)
+                                             -> where('valid', 1)
+                                             -> first();
 
-		 if ($loginStudent) {
-		 	$req-> session()->put('id', $req->studentId);
-		 	$req-> session()->put('type', 'student');
+        if ($loginStudent) 
+        {
+        	$req-> session()->put('id', $req->id);
+        	$req-> session()->put('type', 'student');
 
-		 	return redirect()->route('studentDashboard.index');
-		 }
+        	return redirect()->route('studentDashboard.index');
+        }
+        else
+        {
+        return redirect()->route('login.index');
+        }
     }
 
     public function loginAdmin(Request $req)
     {
-    	$loginAdmin = DB::table('admin') -> where('adminId', $req->adminId)
-										 ->	where('password', $req->password);
+    	$loginAdmin = DB::table('admin') -> where('id', $req->id)
+										 ->	where('password', $req->password)
+                                         -> first();
 
-		if ($loginAdmin) {
-		 	$req-> session()->put('id', $req->adminId);
-		 	$req-> session()->put('type', 'admin');
+        if ($loginAdmin) {
+        	$req-> session()->put('id', $req->adminId);
+        	$req-> session()->put('type', 'admin');
 
-		 	return redirect()->route('adminDashboard.index');
-		}
+        	return redirect()->route('adminDashboard.index');
+        }
+        else
+        {
+        return redirect()->route('login.index');
+        }
     }
 }

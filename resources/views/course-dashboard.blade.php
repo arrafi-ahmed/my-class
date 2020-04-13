@@ -21,12 +21,12 @@
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-2">
-									<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="img-thumbnail"/>
+									<img alt="Bootstrap Image Preview" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}" class="img-thumbnail"/>
 								</div>
 								<div class="col-md-10">
-									<h4>Intro to Math</h4>
-									<h5>C Vandse</h5>
-									<h5>cvandse@gde.com</h5>
+									<h4>{{$course->name}}</h4>
+									<h5>{{$teacher->name}}</h5>
+									<h5>{{$teacher->email}}</h5>
 										
 								</div>
 							</div>
@@ -47,23 +47,13 @@
 								<tbody>
 									<tr>
 										<td>
-											Mon 12:0 PM - Mon 2:0 PM	
+											{{$course->time}}	
 										</td>
 										<td>
-											1114
+											{{$course->roomNo}}
 										</td>
 										
 									</tr>
-									<tr>
-										<td>
-											Tue 11:0 PM - Mon 2:0 PM	
-										</td>
-										<td>
-											1116
-										</td>
-										
-									</tr>
-									
 								</tbody>
 							</table>
 						</div>
@@ -76,12 +66,18 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#tab2" data-toggle="tab">Notices</a>
 							</li>
+
+							@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 							<li class="nav-item">
 								<a class="nav-link" href="#tab3" data-toggle="tab">Results</a>
 							</li>
+							@endif
+
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
+
+								@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 								<div class="pt-3 pb-3">
 									<form method="post" name="uploadNote">
 										<div class="input-group">
@@ -95,7 +91,8 @@
 										</div>	
 									</form>
 								</div>
-								
+								@endif
+
 								<table class="table">
 									<thead>
 										<tr>
@@ -140,13 +137,16 @@
 									</tbody>
 								</table>
 							</div>
+
 							<div class="tab-pane" id="tab2">
+								@if($session['type'] == "admin" || $session['type'] == "teacher")
 								<div class="pt-3 pb-3">
 									<form method="post" name="createNotice">
 										Create Notice: <textarea class="form-control" aria-label="With textarea"  id="createNotice"></textarea>
 										<button type="submit" class="btn btn-primary">Create Notice</button>	
 									</form>
 								</div>
+								@endif
 
 								<table class="table">
 									<thead>
@@ -183,6 +183,8 @@
 									</tbody>
 								</table>
 							</div>
+
+							@if($session['type'] == "admin" || $session['type'] == "teacher")
 							<div class="tab-pane" id="tab3">
 								<table class="table">
 									<thead>
@@ -239,6 +241,8 @@
 									</tbody>
 								</table>
 							</div>
+							@endif
+
 						</div>
 					</div>
 					

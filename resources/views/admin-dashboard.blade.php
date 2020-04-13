@@ -35,22 +35,34 @@
 					<h3>
 						Welcome Admin1
 					</h3> 
-					<button type="button" class="btn btn-primary btn-lg">
+					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Student History
 					</button>
-					<button type="button" class="btn btn-primary btn-lg">
+					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Good Grade Student List
 					</button>
-					<button type="button" class="btn btn-primary btn-lg">
+					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Most Popular Courses List
 					</button>
-					<button type="button" class="btn btn-primary btn-lg">
+					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Modify Payment
 					</button>
-					<button type="button" class="btn btn-primary btn-lg">
+					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Salary
-					</button><br><br>
-
+					</button>
+					<a href="approve-teacher"><button type="button" class="btn btn-primary btn-lg mt-3">
+						Approve Teacher Account
+					</button></a>
+					<a href="approve-student"><button type="button" class="btn btn-primary btn-lg mt-3">
+						Approve Student Account
+					</button></a>
+					<a href="{{route('createCourse.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
+						Create Course
+					</button></a>
+					<a href="{{route('courseList.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
+						Course List
+					</button></a>
+					<br><br>
 				</div>
 			</div>
 		</div>

@@ -13,41 +13,46 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get ('/register',  		 'RegisterController@index')->name('register.index');
-Route::post('/registerTeacher',  'RegisterController@createTeacher');
-Route::post('/registerStudent',  'RegisterController@createStudent');
+Route::get ('/register',  		  'RegisterController@index')->name('register.index');
+Route::post('/registerTeacher',   'RegisterController@createTeacher');
+Route::post('/registerStudent',   'RegisterController@createStudent');
 
-Route::get ('/login', 			 'LoginController@index')->name('login.index');
-Route::get ('/logout', 			 'LogoutController@index')->name('logout.index');
-Route::post('/loginTeacher', 	 'LoginController@loginTeacher');
-Route::post('/loginStudent', 	 'LoginController@loginStudent');
-Route::post('/loginAdmin', 		 'LoginController@loginAdmin');
+Route::get ('/login', 			  'LoginController@index')->name('login.index');
+Route::get ('/logout', 			  'LogoutController@index')->name('logout.index');
+Route::post('/loginTeacher', 	  'LoginController@loginTeacher');
+Route::post('/loginStudent', 	  'LoginController@loginStudent');
+Route::post('/loginAdmin', 		  'LoginController@loginAdmin');
 
-Route::get('/teacher-dashboard', 'TeacherDashboardController@index')->name('teacherDashboard.index');
-Route::get('/student-dashboard', 'StudentDashboardController@index')->name('studentDashboard.index');
-Route::get('/admin-dashboard', 	 'AdminDashboardController@index')->name('adminDashboard.index');
+Route::get ('/teacher-dashboard', 'TeacherDashboardController@index')->name('teacherDashboard.index');
+Route::get ('/student-dashboard', 'StudentDashboardController@index')->name('studentDashboard.index');
+Route::get ('/admin-dashboard',   'AdminDashboardController@index')->name('adminDashboard.index');
 
-Route::get ('/teacher', function () {
-    return view('teacher');
-});
-Route::get('/student', function () {
-    return view('student');
-});
-Route::get('/delete', function () {
-    return view('delete');
-});
-Route::get('/course-list', function () {
-    return view('course-list');
-});
-Route::get('/create-course', function () {
-    return view('create-course');
-});
-Route::get('/update-course', function () {
-    return view('update-course');
-});
-Route::get('/course-dashboard', function () {
-    return view('course-dashboard');
-});
+Route::get ('/approve-teacher',   'ApproveTeacherController@index')->name('approveTeacher.index');
+Route::post('/approve-teacher',   'ApproveTeacherController@approve');
+
+Route::get ('/approve-student',   'ApproveStudentController@index')->name('approveStudent.index');
+Route::post('/approve-student',   'ApproveStudentController@approve');
+
+Route::get ('/teacher',           'TeacherController@index')->name('teacher.index');
+Route::post('/teacher',           'TeacherController@update');
+
+Route::get ('/student',           'StudentController@index')->name('student.index');
+Route::post('/student',           'StudentController@update');
+ 
+Route::get ('/create-course', 	  'CreateCourseController@index')->name('createCourse.index');
+Route::post('/create-course', 	  'CreateCourseController@create');
+
+Route::get ('/course-list', 	  		  'CourseListController@index')->name('courseList.index');
+Route::get ('/course-list/open/{id}', 	  'CourseListController@open')->name('courseList.open');
+Route::get ('/course-list/close/{id}', 	  'CourseListController@close')->name('courseList.close');
+Route::get ('/course-list/delete/{id}',   'CourseListController@delete')->name('courseList.delete');
+Route::get ('/course-list/enroll/{id}',   'CourseListController@enroll')->name('courseList.enroll');
+
+Route::get ('/edit-course/{id}',  'EditCourseController@index')->name('editCourse.index');
+Route::post('/edit-course/{id}',  'EditCourseController@update');
+
+Route::get ('/course-dashboard/{id}',  'CourseDashboardController@index')->name('courseDashboard.index');
+
 Route::get('/make-payment', function () {
     return view('make-payment');
 });

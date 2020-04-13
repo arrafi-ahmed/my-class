@@ -29,13 +29,13 @@ class RegisterController extends Controller
         if ($req->hasFile('profilePhoto')) {
             $file = $req->file('profilePhoto');
 
-            if ($file->move('upload/teacherPhoto/', $req->teacherId .'.'. $file->getClientOriginalExtension())) {
-                $profilePhoto = $req->teacherId .'.'. $file->getClientOriginalExtension();
+            if ($file->move('upload/teacherPhoto/', $req->id .'.'. $file->getClientOriginalExtension())) {
+                $profilePhoto = $req->id .'.'. $file->getClientOriginalExtension();
             }
         }
 
         $createTeacher = DB::table('teacher')->insert(
-            ['teacherId'     => $req->teacherId, 
+            ['id'     => $req->id, 
             'password'       => $req->password,
             'name'           => $req->name,
             'dept'           => $req->dept,
@@ -65,15 +65,15 @@ class RegisterController extends Controller
         if ($req->hasFile('profilePhoto')) {
             $file = $req->file('profilePhoto');
 
-            if ($file->move('upload/studentPhoto/', $req->studentId .'.'. $file->getClientOriginalExtension())) {
-                $profilePhoto = $req->studentId .'.'. $file->getClientOriginalExtension();
+            if ($file->move('upload/studentPhoto/', $req->id .'.'. $file->getClientOriginalExtension())) {
+                $profilePhoto = $req->id .'.'. $file->getClientOriginalExtension();
             }
         }
 
         $createStudent = DB::table('student')->insert(
-            ['studentId'    => $req->studentId,
+            ['id'    => $req->id,
             'password'      => $req->password,
-            'Name'          => $req->name,
+            'name'          => $req->name,
             'dept'          => $req->dept,
             'parentContact' => $req->parentContact,
             'email'         => $req->email,

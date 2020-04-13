@@ -21,9 +21,13 @@
 								<h3>
 									Course List
 								</h3> 
-								<button type="button" class="btn btn-primary">
+
+								@if($userType == "admin" ||$userType == "teacher" )
+								<a href="{{route('createCourse.index')}}"><button type="button" class="btn btn-primary">
 									Create Course
-								</button>
+								</button></a>
+								@endif
+
 								<table class="table">
 									<thead>
 										<tr>
@@ -34,6 +38,12 @@
 												Name
 											</th>
 											<th>
+												Section
+											</th>
+											<th>
+												Teacher ID
+											</th>
+											<th>
 												Status
 											</th>
 											<th>
@@ -42,62 +52,52 @@
 										</tr>
 									</thead>
 									<tbody>
+										@foreach ($courses as $course)
 										<tr>
 											<td>
-												1
+												{{$course->id}}
 											</td>
 											<td>
-												Into to Math
+												{{$course->name}}
 											</td>
 											<td>
-												Deactivated
+												{{$course->section}}
 											</td>
 											<td>
-												<a href="#"><button type="button" class="btn btn-primary">
+												{{$course->teacherId}}
+											</td>
+											<td>
+												{{$course->status == 0 ? "Closed" : "Open" }}
+											</td>
+											<td>
+												@if($userType == "student")
+												<a href="{{route('courseList.enroll', $course->id)}}"><button type="button" class="btn btn-primary">
 													Enroll
 												</button></a>
-												<a href="#"><button type="button" class="btn btn-primary">
+												@endif
+												
+												@if($userType == "admin")
+												<a href="{{route('editCourse.index', $course->id)}}"><button type="button" class="btn btn-primary">
 													Edit
 												</button></a>
-												<a href="#"><button type="button" class="btn btn-success">
-													Activate
+												<a href="{{route('courseList.open', $course->id)}}"><button type="button" class="btn btn-success">
+													Open
 												</button></a>
-												<a href="#"><button type="button" class="btn btn-warning">
-													Deactivate
+												<a href="{{route('courseList.close', $course->id)}}"><button type="button" class="btn btn-warning">
+													Close
 												</button></a>
-												<a href="#"><button type="button" class="btn btn-danger">
+												<a href="{{route('courseList.delete', $course->id)}}"><button type="button" class="btn btn-danger">
 													Delete
 												</button></a>
+												@endif
+
+												<a href="{{route('courseDashboard.index', $course->id)}}"><button type="button" class="btn btn-primary">
+													Dashboard
+												</button></a>
+
 											</td>
 										</tr>
-										<tr>
-											<td>
-												2
-											</td>
-											<td>
-												Into to English
-											</td>
-											<td>
-												Activated
-											</td>
-											<td>
-												<a href="#"><button type="button" class="btn btn-primary">
-													Enroll
-												</button></a>
-												<a href="#"><button type="button" class="btn btn-primary">
-													Edit
-												</button></a>
-												<a href="#"><button type="button" class="btn btn-success">
-													Activate
-												</button></a>
-												<a href="#"><button type="button" class="btn btn-warning">
-													Deactivate
-												</button></a>
-												<a href="#"><button type="button" class="btn btn-danger">
-													Delete
-												</button></a>
-											</td>
-										</tr>
+										@endforeach
 										
 									</tbody>
 								</table>
