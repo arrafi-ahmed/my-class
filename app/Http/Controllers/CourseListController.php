@@ -9,9 +9,22 @@ class CourseListController extends Controller
 {
     public function index(Request $req)
     {
-    	$userType = $req->session()->get('type');
+        $userType = $req->session()->get('type');
     	$courses = DB::table('courses')->get();
-    	//echo $userType;
+    	
+        if ($userType == "student") {
+            $studentId = $req->session()->get('id');
+            $enrolled = DB::table('courses')->whereIn('id', function($query) use($studentId)
+                                            {
+                                                $query->select('courseId')
+                                                ->from('choose_course')
+                                                ->where('studentId', $studentId);
+                                            })  ->get();
+
+            return view('course-list', ['courses'=>$courses, 'userType'=>$userType, 'enrolled'=>$enrolled]);
+        }
+        
+
     	return view('course-list', ['courses'=>$courses, 'userType'=>$userType]);
     }
 

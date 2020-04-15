@@ -58,34 +58,23 @@
 							</tr>
 						</thead>
 						<tbody>
+							@foreach($courses as $course)
 							<tr>
 								<td>
-									1
+									{{$course->id}}
 								</td>
 								<td>
-									<a href="#"> Intro to Math</a>
+									<a href="{{route('courseDashboard.index', $course->id)}}">{{$course->name}}</a>
 								</td>
 								<td>
-									G
+									{{$course->section}}
 								</td>
 								<td>
-									Mon 01/04/2012
+									{{$course->time}}
 								</td>
 							</tr>
-							<tr>
-								<td>
-									2
-								</td>
-								<td>
-									<a href="#"> Intro to English</a>
-								</td>
-								<td>
-									C
-								</td>
-								<td>
-									Mon 08/04/2012
-								</td>
-							</tr>
+							@endforeach
+							
 						</tbody>
 					</table>
 				</div>

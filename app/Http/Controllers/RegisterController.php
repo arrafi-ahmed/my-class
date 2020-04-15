@@ -35,7 +35,7 @@ class RegisterController extends Controller
         }
 
         $createTeacher = DB::table('teacher')->insert(
-            ['id'     => $req->id, 
+            ['id'            => $req->id, 
             'password'       => $req->password,
             'name'           => $req->name,
             'dept'           => $req->dept,
@@ -71,7 +71,7 @@ class RegisterController extends Controller
         }
 
         $createStudent = DB::table('student')->insert(
-            ['id'    => $req->id,
+            ['id'           => $req->id,
             'password'      => $req->password,
             'name'          => $req->name,
             'dept'          => $req->dept,

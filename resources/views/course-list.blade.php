@@ -70,11 +70,32 @@
 												{{$course->status == 0 ? "Closed" : "Open" }}
 											</td>
 											<td>
-												@if($userType == "student")
-												<a href="{{route('courseList.enroll', $course->id)}}"><button type="button" class="btn btn-primary">
-													Enroll
-												</button></a>
-												@endif
+												@php
+													if($userType == "student"){
+														$found=false;
+														foreach ($enrolled as $enroll){
+															if($enroll->id == $course->id){
+																$found = true; break;
+															}
+														}
+
+														if(!$found && $course->status){
+														@endphp
+														<a href="{{route('courseList.enroll', $course->id)}}"><button type="button" class="btn btn-primary" >
+															Enroll
+														</button></a>
+														@php
+														}else{
+														@endphp
+														<a href="#"><button type="button" class="btn btn-primary" disabled>
+															@php
+															echo $course->status == false ? "Enroll" : "Enrolled";
+															@endphp
+														</button></a>
+														@php
+														}
+													}
+												@endphp
 												
 												@if($userType == "admin")
 												<a href="{{route('editCourse.index', $course->id)}}"><button type="button" class="btn btn-primary">
@@ -91,10 +112,16 @@
 												</button></a>
 												@endif
 
-												<a href="{{route('courseDashboard.index', $course->id)}}"><button type="button" class="btn btn-primary">
-													Dashboard
-												</button></a>
-
+												@php 
+												if($userType == "student") {
+													if($found){ @endphp
+														<a href="{{route('courseDashboard.index', $course->id)}}"><button type="button" class="btn btn-primary">Dashboard</button></a>
+													@php }else{ @endphp
+														<a href="#"><button type="button" class="btn btn-primary" disabled>Dashboard</button></a>
+													@php }
+												}else{ @endphp
+													<a href="{{route('courseDashboard.index', $course->id)}}"><button type="button" class="btn btn-primary">Dashboard</button></a>
+												@php } @endphp
 											</td>
 										</tr>
 										@endforeach

@@ -24,7 +24,7 @@
 									<img alt="Bootstrap Image Preview" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}" class="img-thumbnail"/>
 								</div>
 								<div class="col-md-10">
-									<h4>{{$course->name}}</h4>
+									<h4>{{$course->name}} [{{$course->section}}]</h4>
 									<h5>{{$teacher->name}}</h5>
 									<h5>{{$teacher->email}}</h5>
 										
@@ -61,25 +61,24 @@
 					<div class="tabbable" id="tabs-843462">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
-								<a class="nav-link active" href="#tab1" data-toggle="tab">Notes</a>
+								<a class="nav-link active" href="#tab1" data-toggle="tab">Note</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#tab2" data-toggle="tab">Notices</a>
+								<a class="nav-link" href="#tab2" data-toggle="tab">Notice</a>
 							</li>
 
-							@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 							<li class="nav-item">
-								<a class="nav-link" href="#tab3" data-toggle="tab">Results</a>
+								<a class="nav-link" href="#tab3" data-toggle="tab">Result</a>
 							</li>
-							@endif
-
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
 
 								@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 								<div class="pt-3 pb-3">
-									<form method="post" name="uploadNote">
+
+									<form method="post" action="{{route('courseDashboard.createNote', $course->id)}}" enctype="multipart/form-data">
+										@csrf
 										<div class="input-group">
 										  <div class="custom-file">
 										    <input type="file" class="custom-file-input" name="uploadNote">
@@ -90,6 +89,7 @@
 										  </div>
 										</div>	
 									</form>
+
 								</div>
 								@endif
 
@@ -109,40 +109,33 @@
 										</tr>
 									</thead>
 									<tbody>
+										@foreach ($notes as $note)
 										<tr>
 											<td>
-												<a href="#"> Assignment-B.zip</a>
+												<a href="{{route('courseDashboard.downloadNote', $note->filename)}}">{{$note->filename}}</a>
 											</td>
 											<td>
-												09-Apr-20 05:49:14
+												{{$note->date}}
 											</td>
 											<td>
-												3.097 Mb
+												{{$note->size}} MB
 											</td>
 											
 										</tr>
-										<tr>
-											<td>
-												<a href="#"> Assignment-C.zip</a>
-											</td>
-											<td>
-												10-Apr-20 05:49:14
-											</td>
-											<td>
-												2.097 Mb
-											</td>
-											
-										</tr>
-										
+										@endforeach
 									</tbody>
 								</table>
 							</div>
 
 							<div class="tab-pane" id="tab2">
-								@if($session['type'] == "admin" || $session['type'] == "teacher")
+
+								@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 								<div class="pt-3 pb-3">
-									<form method="post" name="createNotice">
-										Create Notice: <textarea class="form-control" aria-label="With textarea"  id="createNotice"></textarea>
+									<form method="post" action="{{route('courseDashboard.createNotice', $course->id)}}">
+										@csrf
+										Create Notice: 
+										<!-- <input type="hidden" name="courseId" value="{{$course->id}}"> -->
+										<textarea class="form-control" aria-label="With textarea"  name="content"></textarea>
 										<button type="submit" class="btn btn-primary">Create Notice</button>	
 									</form>
 								</div>
@@ -161,36 +154,32 @@
 										</tr>
 									</thead>
 									<tbody>
+										@foreach ($notices as $notice)
 										<tr>
 											<td>
-												Regarding Assignment Submission
+												{{$notice->content}}
 											</td>
 											<td>
-												09-Apr-20 05:57:00
+												{{$notice->date}}
 											</td>
 										
 										</tr>
-										<tr>
-											<td>
-												Reqgarding Mid Quiz
-											</td>
-											<td>
-												05-Apr-20 05:57:00
-											</td>
-										
-										</tr>
+										@endforeach
 										
 									</tbody>
 								</table>
 							</div>
 
-							@if($session['type'] == "admin" || $session['type'] == "teacher")
 							<div class="tab-pane" id="tab3">
+								@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
 								<table class="table">
 									<thead>
 										<tr>
 											<th>
 												Student ID
+											</th>
+											<th>
+												Name
 											</th>
 											<th>
 												Grade
@@ -199,15 +188,35 @@
 										</tr>
 									</thead>
 									<tbody>
+										
+										@foreach($students as $student)
+										@php 
+											$grade = null; $gradeId = null; $update = false;
+											foreach($results as $result){
+												if($result->studentId == $student->studentId){
+
+													$grade = $result->result; 
+													$gradeId = $result->id; 
+													$update = true; break;
+												}
+											}
+										@endphp
 										<tr>
 											<td>
-												student1
+												{{$student->studentId}}
+											</td>
+											<td>
+												{{$student->name}}
 											</td>
 											<td>
 												<div class="form-group">
-													<form method="post">
+													<form method="post" action="{{route('courseDashboard.saveResult', $course->id)}}">
+														@csrf
 														<div class="input-group mb-3">
-														  <input type="text" name="grade" class="form-control" placeholder="Place Grade" aria-label="Grade" aria-describedby="basic-addon2" value="A">
+														  <input type="hidden" name="update" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$update}}">
+														  <input type="hidden" name="studentId" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$student->studentId}}">
+														  <input type="hidden" name="resultId" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$gradeId}}">
+														  <input type="text" name="grade" class="form-control" placeholder="Place Grade" aria-label="Grade" aria-describedby="basic-addon2" value="{{$grade}}">
 														  <div class="input-group-append">
 														    <button class="btn btn-primary" type="submit">Save</button>
 														  </div>
@@ -217,32 +226,24 @@
 												</div>
 												
 											</td>
-											
-										
 										</tr>
-										<tr>
-											<td>
-												student2
-											</td>
-											<td>
-												<form method="post">
-													<div class="input-group mb-3">
-													  <input type="text" name="grade" class="form-control" placeholder="Place Grade" aria-label="Grade" aria-describedby="basic-addon2" value="B">
-													  <div class="input-group-append">
-													    <button class="btn btn-primary" type="submit">Save</button>
-													  </div>
-													</div>
-													
-												</form>	
-											</td>
-										
-										</tr>
-										
+										@endforeach
 									</tbody>
 								</table>
-							</div>
-							@endif
+								@endif
 
+								<h6 class="text-center">
+								@php
+								if($session['type'] == "student"){
+									if(isset($students->result))
+										echo "<br> Grade: ".$students->result ;	
+									else
+										echo "<br> Result not available. ";
+								}
+								@endphp
+								</h6>
+							</div>
+							
 						</div>
 					</div>
 					
