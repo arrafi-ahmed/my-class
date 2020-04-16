@@ -18,14 +18,12 @@ Route::post('/registerTeacher',		'RegisterController@createTeacher');
 Route::post('/registerStudent',		'RegisterController@createStudent');
 
 Route::get ('/login', 			'LoginController@index')->name('login.index');
-Route::get ('/logout', 			'LogoutController@index')->name('logout.index');
+Route::get ('/logout', 			'LoginController@logout')->name('logout.index');
 Route::post('/loginTeacher', 	'LoginController@loginTeacher');
 Route::post('/loginStudent', 	'LoginController@loginStudent');
 Route::post('/loginAdmin', 		'LoginController@loginAdmin');
 
-Route::get ('/teacher-dashboard',	'TeacherDashboardController@index')->name('teacherDashboard.index');
-Route::get ('/student-dashboard',	'StudentDashboardController@index')->name('studentDashboard.index');
-Route::get ('/admin-dashboard',		'AdminDashboardController@index')->name('adminDashboard.index');
+Route::get ('/dashboard',		'DashboardController@index')->name('dashboard.index');
 
 Route::get ('/approve-teacher',   'ApproveTeacherController@index')->name('approveTeacher.index');
 Route::post('/approve-teacher',   'ApproveTeacherController@approve');
@@ -33,12 +31,11 @@ Route::post('/approve-teacher',   'ApproveTeacherController@approve');
 Route::get ('/approve-student',   'ApproveStudentController@index')->name('approveStudent.index');
 Route::post('/approve-student',   'ApproveStudentController@approve');
 
-Route::get ('/teacher',		'TeacherController@index')->name('teacher.index');
-Route::post('/teacher',     'TeacherController@update');
+Route::get ('/profile/edit',	 'ProfileController@edit')->name('profile.edit');
+Route::post('/profile/edit',     'ProfileController@update');
+Route::get ('/profile/{id}',	 'ProfileController@view')->name('profile.view');
+Route::post('/search',			 'ProfileController@search')->name('profile.search');
 
-Route::get ('/student',		'StudentController@index')->name('student.index');
-Route::post('/student',     'StudentController@update');
- 
 Route::get ('/create-course',	'CreateCourseController@index')->name('createCourse.index');
 Route::post('/create-course',	'CreateCourseController@create');
 

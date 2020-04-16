@@ -25,8 +25,8 @@
 								</div>
 								<div class="col-md-10">
 									<h4>{{$course->name}} [{{$course->section}}]</h4>
-									<h5>{{$teacher->name}}</h5>
-									<h5>{{$teacher->email}}</h5>
+									<h6>{{$teacher->name}}</h6>
+									<h6>{{$teacher->email}}</h6>
 										
 								</div>
 							</div>

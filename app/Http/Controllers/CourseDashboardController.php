@@ -12,9 +12,9 @@ class CourseDashboardController extends Controller
     	$session        = $req->session()->all();
     	$course         = DB::table('courses')->find($id);
     	$teacher        = DB::table('teacher')->find($course->teacherId);
-        $notices        = DB::table('notice')->where('courseId', $course->id)->get();
-        $notes          = DB::table('note')->where('courseId', $course->id)->get();
-        $results        = DB::table('result')->where('courseId', $id)->get();
+        $notices        = DB::table('notice') ->where('courseId', $course->id)->get();
+        $notes          = DB::table('note')   ->where('courseId', $course->id)->get();
+        $results        = DB::table('result') ->where('courseId', $id)->get();
 
         if ($session['type']=='admin' || $session['type']=='teacher' ) 
         {
@@ -26,9 +26,9 @@ class CourseDashboardController extends Controller
         elseif ($session['type']=='student') 
         {
             $students       = DB::table('result')-> where('courseId', $id)
-                                                 -> where('studentId',$session['id'])->first();
+                                                 -> where('studentId',$session['id'])
+                                                 ->first();
         }
-
 
     	return view('course-dashboard', ['course'=>$course, 'teacher'=>$teacher, 'students'=>$students, 'notices'=>$notices, 'notes'=>$notes, 'results'=>$results, 'session'=>$session]);
     }

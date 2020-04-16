@@ -24,11 +24,11 @@ class LoginController extends Controller
         	$req-> session()->put('id', $req->id);
         	$req-> session()->put('type', 'teacher');
 
-        	return redirect()->route('teacherDashboard.index');
+        	return redirect()->route('dashboard.index');
         }
         else
         {
-        return redirect()->route('login.index');
+            return redirect()->route('login.index');
         }
     }
 
@@ -44,11 +44,11 @@ class LoginController extends Controller
         	$req-> session()->put('id', $req->id);
         	$req-> session()->put('type', 'student');
 
-        	return redirect()->route('studentDashboard.index');
+        	return redirect()->route('dashboard.index');
         }
         else
         {
-        return redirect()->route('login.index');
+            return redirect()->route('login.index');
         }
     }
 
@@ -59,14 +59,20 @@ class LoginController extends Controller
                                          -> first();
 
         if ($loginAdmin) {
-        	$req-> session()->put('id', $req->adminId);
+        	$req-> session()->put('id', $req->id);
         	$req-> session()->put('type', 'admin');
 
-        	return redirect()->route('adminDashboard.index');
+        	return redirect()->route('dashboard.index');
         }
         else
         {
-        return redirect()->route('login.index');
+            return redirect()->route('login.index');
         }
+    }
+
+    public function logout(Request $req)
+    {
+        $req->session()->flush();
+        return redirect('/login');
     }
 }
