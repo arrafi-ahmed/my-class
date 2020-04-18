@@ -48,9 +48,9 @@
 					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Generate Most Popular Courses List
 					</button>
-					<button type="button" class="btn btn-primary btn-lg mt-3">
+					<a href="{{route('payment.modify')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Modify Payment
-					</button>
+					</button></a>
 					<button type="button" class="btn btn-primary btn-lg mt-3">
 						Salary
 					</button>

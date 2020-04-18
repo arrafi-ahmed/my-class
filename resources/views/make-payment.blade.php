@@ -14,102 +14,127 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					
-					<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<h3>
-				Make Payment
-			</h3>
 
-			<form role="form" class="form-inline">
-				<div class="form-group">
-					 
-					<label for="exampleInputEmail1">
-						Course ID
-					</label>
-					<input type="text" class="form-control" name="courseId" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Amount
-					</label>
-					<input type="text" class="form-control" name="amount" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Method
-					</label>
-					<input type="text" class="form-control" name="method" />
-				</div>
-				<div class="form-group">
-					 
-					<label for="exampleInputPassword1">
-						Ref. No
-					</label>
-					<input type="text" class="form-control" name="refNo" />
-				</div>
-				
-				<button type="submit" class="btn btn-primary">
-					Pay
-				</button>
-			</form>
-
-			<h5>Registered Courses</h5>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>
-							Course ID
-						</th>
-						<th>
-							Name
-						</th>
-						<th>
-							Section
-						</th>
-						<th>
-							Payment Status
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							1
-						</td>
-						<td>
-							<a href="#"> Intro to Math</a>
-						</td>
-						<td>
-							G
-						</td>
-						<td>
-							Valid
-						</td>
-					</tr>
-					<tr>
-						<td>
-							2
-						</td>
-						<td>
-							<a href="#"> Intro to English</a>
-						</td>
-						<td>
-							C
-						</td>
-						<td>
-							Invalid
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
+					@if(isset($course->id))
+					<h3>
+						Make Payment
+					</h3>
+					<form method="post" action="{{route('payment.create', $course->id)}}">
+						@csrf
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										Course ID
+									</th>
+									<th>
+										Fee
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Method
+									</th>
+									<th>
+										Ref. No
+									</th>
+									<th>
+										Action
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input type="text" class="form-control" name="courseId" value="{{$course->id}}" readonly />
+									</td>
+									<td>
+										<input type="text" class="form-control" name="fee" value="{{$course->fee}}" readonly />
+									</td>
+									<td>
+										<input type="text" class="form-control" name="amount" />
+									</td>
+									<td>
+										<input type="text" class="form-control" name="method" />
+									</td>
+									<td>
+										<input type="text" class="form-control" name="refNo" />
+									</td>
+									<td>
+										<button type="submit" class="btn btn-primary">
+											Pay
+										</button>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</form>
+					@endif
 					
+					<h3>Recent Payments</h3>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									Payment ID
+								</th>
+								<th>
+									Amount
+								</th>
+								<th>
+									Method
+								</th>
+								<th>
+									Course ID
+								</th>
+								<th>
+									Name
+								</th>
+								<th>
+									Section
+								</th>
+								<th>
+									Date
+								</th>
+								<th>
+									Payment Status
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($payments as $payment)
+							<tr>
+								<td>
+									{{$payment->id}}
+								</td>
+								<td>
+									{{$payment->amount}}
+								</td>
+								<td>
+									{{$payment->method}}
+								</td>
+								<td>
+									{{$payment->courseId}}
+								</td>
+								<td>
+									{{$payment->name}}
+								</td>
+								<td>
+									{{$payment->section}}
+								</td>
+								<td>
+									{{$payment->date}}
+								</td>
+								<td>
+									{{$payment->status == 1 ? "Paid" : "Unpaid" }}
+								</td>
+							</tr>
+							@endforeach
+							
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

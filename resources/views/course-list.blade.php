@@ -81,7 +81,7 @@
 
 														if(!$found && $course->status){
 														@endphp
-														<a href="{{route('courseList.enroll', $course->id)}}"><button type="button" class="btn btn-primary" >
+														<a href="{{route('payment.enroll', $course->id)}}"><button type="button" class="btn btn-primary" >
 															Enroll
 														</button></a>
 														@php

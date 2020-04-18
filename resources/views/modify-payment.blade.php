@@ -14,14 +14,23 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					
-					<h5>Modify Payment</h5>
-					<div class="table-responsive">
+
+					<h3>
+						Modify Payment
+					</h3>
+					<form method="post" action="{{route('payment.modify')}}">
+						@csrf
 						<table class="table">
 							<thead>
 								<tr>
 									<th>
 										Payment ID
+									</th>
+									<th>
+										Course ID
+									</th>
+									<th>
+										Fee
 									</th>
 									<th>
 										Amount
@@ -33,13 +42,7 @@
 										Ref. No
 									</th>
 									<th>
-										Course ID
-									</th>
-									<th>
-										Date
-									</th>
-									<th>
-										Status
+										Payment Status
 									</th>
 									<th>
 										Action
@@ -48,70 +51,115 @@
 							</thead>
 							<tbody>
 								<tr>
-									<form method="post">
+									<form method="post" action="{{route('payment.modify')}}">
+										@csrf
 										<td>
-											<input type="text" name="paymentId" value="1" readonly> 
+											<input type="text" class="form-control" name="paymentId"  value="{{isset($find->id) ? $find->id : ''}}"/>
+											<button class="btn btn-primary" type="submit" name="find" value="Find">Find</button>
 										</td>
 										<td>
-											<input type="text" name="amount" value="3000"> 
+											<input type="text" class="form-control" name="courseId" value="{{isset($find->courseId) ? $find->courseId : ''}}" readonly/>
 										</td>
 										<td>
-											<input type="text" name="method" value="bKash"> 
+											<input type="text" class="form-control" name="fee" value="{{isset($find->fee) ? $find->fee : ''}}" readonly/>
 										</td>
 										<td>
-											<input type="text" name="refNo" value="003235656"> 
+											<input type="text" class="form-control" name="amount" value="{{isset($find->amount) ? $find->amount : ''}}" />
 										</td>
 										<td>
-											<input type="text" name="courseId" value="1"> 
+											<input type="text" class="form-control" name="method" value="{{isset($find->method) ? $find->method : ''}}" />
 										</td>
 										<td>
-											<input type="text" name="date" value="20/01/20" readonly> 
+											<input type="text" class="form-control" name="refNo" value="{{isset($find->refNo) ? $find->refNo : ''}}" />
 										</td>
 										<td>
-											<select class="custom-select" id="inputGroupSelect01">
-											    <option value="1">Paid</option>
-											    <option value="2">Unpaid</option>
+											<select class="form-control" name="status">
+												<option value="1" {{isset($find->status) && $find->status == 1 ? 'selected' : ''}}>
+													Paid
+												</option>
+												<option value="0" {{isset($find->status) && $find->status == 0 ? 'selected' : ''}}>
+													Unpaid
+												</option>
 											</select>
 										</td>
 										<td>
-											<button class="btn btn-primary" type="submit">Save</button>
+											<button type="submit" class="btn btn-primary" name="update" value="update">Update</button>
 										</td>
 									</form>
 								</tr>
-								<tr>
-									<form method="post">
-										<td>
-											<input type="text" name="paymentId" value="2" readonly> 
-										</td>
-										<td>
-											<input type="text" name="amount" value="4000"> 
-										</td>
-										<td>
-											<input type="text" name="method" value="bKash"> 
-										</td>
-										<td>
-											<input type="text" name="refNo" value="443235656"> 
-										</td>
-										<td>
-											<input type="text" name="courseId" value="2"> 
-										</td>
-										<td>
-											<input type="text" name="date" value="20/02/20" readonly> 
-										</td>
-										<td>
-											<select class="custom-select" id="inputGroupSelect01">
-											    <option value="1">Valid</option>
-											    <option value="2">Invalid</option>
-											</select>
-										</td>
-										<td>
-											<button class="btn btn-primary" type="submit">Save</button>
-										</td>
-									</form>
-								</tr>
+								
 							</tbody>
 						</table>
-					</div>
+					</form>
+					
+					<h3>Recent Payments</h3>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									Payment ID
+								</th>
+								<th>
+									Amount
+								</th>
+								<th>
+									Method
+								</th>
+								<th>
+									Student ID
+								</th>
+								<th>
+									Course ID
+								</th>
+								<th>
+									Name
+								</th>
+								<th>
+									Section
+								</th>
+								<th>
+									Date
+								</th>
+								<th>
+									Payment Status
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($payments as $payment)
+							<tr>
+								<td>
+									{{$payment->id}}
+								</td>
+								<td>
+									{{$payment->amount}}
+								</td>
+								<td>
+									{{$payment->method}}
+								</td>
+								<td>
+									{{$payment->studentId}}
+								</td>
+								<td>
+									{{$payment->courseId}}
+								</td>
+								<td>
+									{{$payment->name}}
+								</td>
+								<td>
+									{{$payment->section}}
+								</td>
+								<td>
+									{{$payment->date}}
+								</td>
+								<td>
+									{{$payment->status == 1 ? "Paid" : "Unpaid" }}
+								</td>
+							</tr>
+							@endforeach
+							
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

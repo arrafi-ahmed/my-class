@@ -20,7 +20,8 @@ class CreateCourseController extends Controller
             'time'      => $req->time,
             'roomNo'    => $req->roomNo,
             'capacity'  => $req->capacity,
-            'teacherId'  => $req->teacherId,
+            'teacherId' => $req->teacherId,
+            'fee'       => $req->fee,
             'status'    => 0]
         );
 

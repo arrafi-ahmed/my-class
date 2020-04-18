@@ -43,7 +43,12 @@ Route::get ('/course-list', 	  		  'CourseListController@index')->name('courseLi
 Route::get ('/course-list/open/{id}', 	  'CourseListController@open')->name('courseList.open');
 Route::get ('/course-list/close/{id}', 	  'CourseListController@close')->name('courseList.close');
 Route::get ('/course-list/delete/{id}',   'CourseListController@delete')->name('courseList.delete');
-Route::get ('/course-list/enroll/{id}',   'CourseListController@enroll')->name('courseList.enroll');
+
+Route::get ('/payment/{id}',   'PaymentController@enroll')->name('payment.enroll');
+Route::post('/payment/{id}',   'PaymentController@create')->name('payment.create');
+
+Route::get ('/payment-modify',   'PaymentController@modify')->name('payment.modify');
+Route::post('/payment-modify',   	 'PaymentController@modify')->name('payment.modify');
 
 Route::get ('/edit-course/{id}',  'EditCourseController@index')->name('editCourse.index');
 Route::post('/edit-course/{id}',  'EditCourseController@update');

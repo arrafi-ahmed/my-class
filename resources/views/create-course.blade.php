@@ -65,6 +65,13 @@
 										</label>
 										<input type="text" class="form-control" name="teacherId" />
 									</div>
+									<div class="form-group">
+										 
+										<label for="exampleInputPassword1">
+											Fee
+										</label>
+										<input type="text" class="form-control" name="fee" />
+									</div>
 									<button type="submit" class="btn btn-primary">
 										Create
 									</button>
