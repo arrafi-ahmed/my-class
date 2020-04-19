@@ -51,9 +51,10 @@
 					<a href="{{route('payment.modify')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Modify Payment
 					</button></a>
-					<button type="button" class="btn btn-primary btn-lg mt-3">
+					<a href="{{route('salary.index')}}"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Salary
-					</button>
+					</button></a>
+					
 					<a href="approve-teacher"><button type="button" class="btn btn-primary btn-lg mt-3">
 						Approve Teacher Account
 					</button></a>

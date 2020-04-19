@@ -41,6 +41,7 @@ class RegisterController extends Controller
             'dept'           => $req->dept,
             'qualification'  => $req->qualification,
             'email'          => $req->email,
+            'salary'         => $req->salary,
             'profilePhoto'   => $profilePhoto,
             'valid'          => 0]
         );

@@ -26,6 +26,8 @@
 								<a class="nav-link" href="#tab2" data-toggle="tab">Student</a>
 							</li>
 						</ul>
+
+						<!-- Teacher -->
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
 								<form method="post" action="registerTeacher" enctype="multipart/form-data" name="teacher">
@@ -74,6 +76,13 @@
 									</div>
 									<div class="form-group">
 										 
+										<label for="exampleInputEmail1">
+											Salary
+										</label>
+										<input type="text" class="form-control" name="salary" />
+									</div>
+									<div class="form-group">
+										 
 										<label for="exampleInputFile">
 											Profile Photo
 										</label>
@@ -92,6 +101,7 @@
 								</form>
 							</div>
 
+							<!-- Student -->
 							<div class="tab-pane" id="tab2">
 								<form method="post" action="registerStudent" enctype="multipart/form-data" name="student">
 									@csrf

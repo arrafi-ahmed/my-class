@@ -15,7 +15,36 @@
 			<div class="row">
 				<div class="col-md-12">
 					
-					<h5>Salary Record</h5>
+					<h4>Salary Record</h4>
+					<form method="post">
+						@csrf
+						<div class="input-group pt-3 pb-3">
+							<label class="input-group-text" for="inputGroupSelect01">Teacher ID: </label>
+							<input type="text" name="teacherId" value="{{ isset($teacher->id) ? $teacher->id : '' }}" class="form-control" aria-describedby="basic-addon2">
+							
+							<div class="input-group-append">
+						    	<button class="btn btn-primary" type="submit" name="find" value="find">Find</button>
+						    	<button class="btn btn-success" type="submit" name="pay" value="pay">Pay</button>
+							</div>
+
+							
+						</div>
+					</form>
+						
+					@if(isset($teacher))
+					<div class="teacherInfo">
+						<img class="img-thumbnail d-inline-block mr-4 mb-3" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}">
+						<div class="d-inline-block">
+							<b>Teacher ID:</b> {{ $teacher->id }}<br>
+							<b>Name:</b> {{ $teacher->name }}<br>
+							<b>Dept:</b> {{ $teacher->dept }}<br>
+							<b>Salary:</b> {{ $teacher->salary }}<br>
+							<b>Email:</b> {{ $teacher->email }}<br>
+						</div>
+					</div>
+					@endif
+
+					@if(isset($salaries))
 					<div class="table-responsive">
 						<table class="table">
 							<thead>
@@ -30,9 +59,6 @@
 										Date
 									</th>
 									<th>
-										Teacher ID
-									</th>
-									<th>
 										Status
 									</th>
 									<th>
@@ -41,59 +67,36 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<form method="post">
+								@foreach ($salaries as $salary)
+								<form method="post">
+									@csrf
+									<tr>
+										<input type="hidden" name="teacherId" value="{{ isset($teacher->id) ? $teacher->id : '' }}" class="form-control">
 										<td>
-											<input type="text" name="salaryId" value="1" readonly> 
+											<input class="form-control" type="text" name="salaryId" value="{{ isset($salary->id) ? $salary->id : '' }}" readonly> 
 										</td>
 										<td>
-											<input type="text" name="amount" value="15000"> 
+											<input class="form-control" type="text" name="amount" value="{{ isset($salary->amount) ? $salary->amount : '' }}"> 
 										</td>
 										<td>
-											<input type="text" name="date" value="20/01/20" readonly> 
+											<input class="form-control" type="text" name="date" value="{{ isset($salary->date) ? $salary->date : '' }}" readonly> 
 										</td>
 										<td>
-											<input type="text" name="teacherId" value="teacher1" readonly> 
-										</td>
-										<td>
-											<select class="custom-select" id="inputGroupSelect01">
-											    <option value="1">Paid</option>
-											    <option value="2">Unpaid</option>
+											<select name="status" class="custom-select" id="inputGroupSelect01">
+											    <option value="1" {{$salary->status == 1 ? 'selected' : '' }}>Paid</option>
+											    <option value="0" {{$salary->status == 0 ? 'selected' : '' }}>Unpaid</option>
 											</select>
 										</td>
 										<td>
-											<button class="btn btn-primary" type="submit">Save</button>
+											<button name="save" value="save" class="btn btn-primary" type="submit">Save</button>
 										</td>
-									</form>
-								</tr>
-								<tr>
-									<form method="post">
-										<td>
-											<input type="text" name="salaryId" value="2" readonly> 
-										</td>
-										<td>
-											<input type="text" name="amount" value="15500"> 
-										</td>
-										<td>
-											<input type="text" name="date" value="20/02/20" readonly> 
-										</td>
-										<td>
-											<input type="text" name="teacherId" value="teacher1" readonly> 
-										</td>
-										<td>
-											<select class="custom-select" id="inputGroupSelect01">
-											    <option value="1">Paid</option>
-											    <option value="2">Unpaid</option>
-											</select>
-										</td>
-										<td>
-											<button class="btn btn-primary" type="submit">Save</button>
-										</td>
-									</form>
-								</tr>
+									</tr>
+								</form>
+								@endforeach
 							</tbody>
 						</table>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>

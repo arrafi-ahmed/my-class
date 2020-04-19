@@ -44,16 +44,10 @@ Route::get ('/course-list/open/{id}', 	  'CourseListController@open')->name('cou
 Route::get ('/course-list/close/{id}', 	  'CourseListController@close')->name('courseList.close');
 Route::get ('/course-list/delete/{id}',   'CourseListController@delete')->name('courseList.delete');
 
-Route::get ('/payment/{id}',   'PaymentController@enroll')->name('payment.enroll');
-Route::post('/payment/{id}',   'PaymentController@create')->name('payment.create');
-
-Route::get ('/payment-modify',   'PaymentController@modify')->name('payment.modify');
-Route::post('/payment-modify',   	 'PaymentController@modify')->name('payment.modify');
-
 Route::get ('/edit-course/{id}',  'EditCourseController@index')->name('editCourse.index');
 Route::post('/edit-course/{id}',  'EditCourseController@update');
 
-Route::get ('/course-dashboard/{id}',  				 	 'CourseDashboardController@index')->name('courseDashboard.index');
+Route::get ('/course-dashboard/{id}',	'CourseDashboardController@index')->name('courseDashboard.index');
 
 Route::get ('/course-dashboard/{id}#tab1',  			 'CourseDashboardController@index')->name('courseDashboard1.index');
 Route::post('/course-dashboard/{id}/createNote',  	 	 'CourseDashboardController@createNote')->name('courseDashboard.createNote');
@@ -62,15 +56,14 @@ Route::get ('/course-dashboard/{filename}/downloadNote', 'CourseDashboardControl
 Route::get ('/course-dashboard/{id}#tab2',  			 'CourseDashboardController@index')->name('courseDashboard2.index');
 Route::post('/course-dashboard/{id}/createNotice',   	 'CourseDashboardController@createNotice')->name('courseDashboard.createNotice');
 
-Route::get ('/course-dashboard/{id}#tab3',  			 'CourseDashboardController@index')->name('courseDashboard3.index');
-Route::post('/course-dashboard/{id}/saveResult',   		 'CourseDashboardController@saveResult')->name('courseDashboard.saveResult');
+Route::get ('/course-dashboard/{id}#tab3',	 		'CourseDashboardController@index')->name('courseDashboard3.index');
+Route::post('/course-dashboard/{id}/saveResult',	'CourseDashboardController@saveResult')->name('courseDashboard.saveResult');
 
-Route::get('/make-payment', function () {
-    return view('make-payment');
-});
-Route::get('/modify-payment', function () {
-    return view('modify-payment');
-});
-Route::get('/salary', function () {
-    return view('salary');
-});
+Route::get ('/payment/{id}',   'PaymentController@enroll')->name('payment.enroll');
+Route::post('/payment/{id}',   'PaymentController@create')->name('payment.create');
+
+Route::get ('/payment-modify',   'PaymentController@modify')->name('payment.modify');
+Route::post('/payment-modify',   'PaymentController@modify')->name('payment.modify');
+
+Route::get ('/salary',   'SalaryController@index')->name('salary.index');
+Route::post('/salary',   'SalaryController@modify')->name('salary.modify');
