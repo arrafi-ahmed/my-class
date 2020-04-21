@@ -74,3 +74,11 @@ Route::post('/contact', 	   	'ContactController@contact')->name('contact.contact
 Route::get ('/contact/{id}',   	'ContactController@content')->name('contact.content');
 Route::post('/contact/{id}',   	'ContactController@content');
 Route::post('/send',      	   	'ContactController@send')->name('contact.send');
+
+Route::get ('/popular-courses',	'ReportController@courses')->name('report.courses');
+
+Route::get ('/student-history',	'ReportController@historyGet')->name('report.historyGet');
+Route::post('/student-history',	'ReportController@historyPost');
+
+Route::get ('/good-grades',		'ReportController@gradesGet')->name('report.gradesGet');
+Route::post('/good-grades',		'ReportController@gradesPost');

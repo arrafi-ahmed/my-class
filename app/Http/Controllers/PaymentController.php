@@ -34,6 +34,9 @@ class PaymentController extends Controller
     											   'courseId' 	=> $id,
     											   'status' 	=> 0,
     											   'studentId' 	=> $session['id']]); 
+
+    	$choose_course = DB::table('choose_course') -> insert(['courseId' 	=> $id,
+			    											   'studentId' 	=> $session['id']]); 
 		$studentId = $session['id'];
 		$payments = DB::table('payment') -> join('courses', function($join) use ($studentId)
 											{
@@ -43,7 +46,7 @@ class PaymentController extends Controller
 										 -> select('payment.*', 'courses.name', 'courses.section')
 										 -> orderBy('payment.id', 'desc')
 										 -> get(); 	
-		if ($payment)
+		if ($payment && $choose_course)
 		{
 			return view('make-payment', ['payments'=>$payments, 'session'=>$session]);				
 	   	}	

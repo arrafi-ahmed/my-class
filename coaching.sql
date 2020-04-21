@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2020 at 10:04 AM
+-- Generation Time: Apr 21, 2020 at 11:27 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -159,7 +159,10 @@ INSERT INTO `payment` (`id`, `amount`, `method`, `refNo`, `courseId`, `date`, `s
 (4, 500, 'Upay', '7887979', 6, '2020-04-17 00:40:44', 0, 'student1'),
 (5, 300, 'Upay', '686869797', 6, '2020-04-18 13:40:43', 0, 'student1'),
 (6, 300, 'Upay', '686869797', 6, '2020-04-18 13:42:23', 0, 'student1'),
-(7, 300, 'Upay', '686869797', 6, '2020-04-18 13:42:28', 1, 'student1');
+(7, 300, 'Upay', '686869797', 6, '2020-04-18 13:42:28', 1, 'student1'),
+(8, 3000, 'Union', '56598232', 6, '2020-04-21 12:08:00', 0, 'student1'),
+(9, 3000, 'Union', '56598232', 6, '2020-04-21 12:08:39', 0, 'student1'),
+(10, 3000, 'Lojk', '000012', 6, '2020-04-21 12:12:06', 0, 'student1');
 
 -- --------------------------------------------------------
 
@@ -180,7 +183,8 @@ CREATE TABLE `result` (
 
 INSERT INTO `result` (`id`, `result`, `courseId`, `studentId`) VALUES
 (4, 'A', 3, 'student1'),
-(28, 'B', 3, 'student2');
+(28, 'A+', 3, 'student2'),
+(29, 'A-', 6, 'student1');
 
 -- --------------------------------------------------------
 
@@ -191,10 +195,21 @@ INSERT INTO `result` (`id`, `result`, `courseId`, `studentId`) VALUES
 CREATE TABLE `salary` (
   `id` int(10) NOT NULL,
   `amount` int(5) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
   `status` tinyint(1) NOT NULL,
-  `teacherId` int(10) NOT NULL
+  `teacherId` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `salary`
+--
+
+INSERT INTO `salary` (`id`, `amount`, `date`, `status`, `teacherId`) VALUES
+(1, 100000, '2020-04-20 00:56:58', 1, 'teacher1'),
+(2, 100000, '2020-04-20 00:58:55', 1, 'teacher1'),
+(3, 100000, '2020-04-20 02:14:02', 1, 'teacher1'),
+(4, 100000, '2020-04-20 02:14:19', 0, 'teacher1'),
+(5, 80000, '2020-04-20 02:14:38', 1, 'teacher2');
 
 -- --------------------------------------------------------
 
@@ -234,6 +249,7 @@ CREATE TABLE `teacher` (
   `dept` varchar(50) NOT NULL,
   `qualification` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `salary` int(6) NOT NULL,
   `profilePhoto` varchar(50) NOT NULL,
   `valid` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -242,9 +258,9 @@ CREATE TABLE `teacher` (
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`id`, `password`, `name`, `dept`, `qualification`, `email`, `profilePhoto`, `valid`) VALUES
-('teacher1', 'asdf', 'Bill Gates', 'CSE', 'Phd, Harvard', 't1@mail.com', 'teacher1.jpg', 1),
-('teacher2', 'asdf', 'Mark Zuck', 'CS', 'Bachelors, Harvard', 't2@mail.com', 'teacher2.jpg', 1);
+INSERT INTO `teacher` (`id`, `password`, `name`, `dept`, `qualification`, `email`, `salary`, `profilePhoto`, `valid`) VALUES
+('teacher1', 'asdf', 'Bill Gates', 'CSE', 'Phd, Harvard', 't1@mail.com', 100000, 'teacher1.jpg', 1),
+('teacher2', 'asdf', 'Mark Zuck', 'CS', 'Bachelors, Harvard', 't2@mail.com', 80000, 'teacher2.jpg', 1);
 
 --
 -- Indexes for dumped tables
@@ -318,7 +334,7 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `choose_course`
 --
 ALTER TABLE `choose_course`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -342,19 +358,19 @@ ALTER TABLE `notice`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `result`
 --
 ALTER TABLE `result`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `salary`
 --
 ALTER TABLE `salary`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

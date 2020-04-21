@@ -51,11 +51,4 @@ class CourseListController extends Controller
 
 		return redirect()->route('courseList.index');
     }
-
-  //   public function enroll($id, Request $req)
-  //   {
-  //   	$enroll = DB::table('choose_course') -> insert(['courseId'=>$id, 'studentId'=>$req->session()->get('id')]);
-
-		// return redirect()->route('courseList.index');
-  //   }
 }
