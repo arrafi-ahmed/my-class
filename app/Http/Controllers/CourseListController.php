@@ -13,13 +13,17 @@ class CourseListController extends Controller
     	$courses = DB::table('courses')->get();
     	
         if ($userType == "student") {
-            $studentId = $req->session()->get('id');
-            $enrolled = DB::table('courses')->whereIn('id', function($query) use($studentId)
-                                            {
-                                                $query->select('courseId')
-                                                ->from('choose_course')
-                                                ->where('studentId', $studentId);
-                                            })  ->get();
+            $studentId = session('id');
+            // $enrolled = DB::table('courses')->whereIn('id', function($query) use($studentId)
+            //                                 {
+            //                                     $query->select('courseId')
+            //                                     ->from('choose_course')
+            //                                     ->where('studentId', $studentId);
+            //                                 })  ->get();
+
+            $enrolled = DB::table('payment')->select('courseId', 'status')
+                                            ->where('studentId', session('id'))
+                                            ->get();
 
             return view('course-list', ['courses'=>$courses, 'userType'=>$userType, 'enrolled'=>$enrolled]);
         }

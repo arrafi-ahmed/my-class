@@ -13,15 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get ('/', 			 	 'LoginController@root')->name('login.root');
+Route::get ('/login', 			 'LoginController@index')->name('login.index');
+Route::post('/login', 	 		 'LoginController@login');
+Route::get ('/logout', 			 'LoginController@logout')->name('logout.index');
+
 Route::get ('/register',  		 'RegisterController@index')->name('register.index');
 Route::post('/registerTeacher',	 'RegisterController@createTeacher');
 Route::post('/registerStudent',	 'RegisterController@createStudent');
-
-Route::get ('/login', 			 'LoginController@index')->name('login.index');
-Route::get ('/logout', 			 'LoginController@logout')->name('logout.index');
-Route::post('/loginTeacher', 	 'LoginController@loginTeacher');
-Route::post('/loginStudent', 	 'LoginController@loginStudent');
-Route::post('/loginAdmin', 		 'LoginController@loginAdmin');
 
 Route::get ('/dashboard',		 'DashboardController@index')->name('dashboard.index');
 
@@ -63,7 +62,7 @@ Route::get ('/payment/{id}',	'PaymentController@enroll')->name('payment.enroll')
 Route::post('/payment/{id}',   	'PaymentController@create')->name('payment.create');
 
 Route::get ('/payment-modify', 	'PaymentController@modify')->name('payment.modify');
-Route::post('/payment-modify', 	'PaymentController@modify')->name('payment.modify');
+Route::post('/payment-modify', 	'PaymentController@modify');
 
 Route::get ('/salary',  	  	'SalaryController@index')->name('salary.index');
 Route::post('/salary',  	   	'SalaryController@modify')->name('salary.modify');
