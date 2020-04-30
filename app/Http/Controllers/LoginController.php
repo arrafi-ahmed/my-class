@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function root(Request $req)
     {
-        if ($req->session()->has('type')) 
+        if (session()->has('type')) 
         {
             return redirect()->route('dashboard.index');
         }
@@ -22,6 +22,11 @@ class LoginController extends Controller
 
     public function index()
     {
+        if (session()->has('type')) 
+        {
+            return redirect()->route('dashboard.index');
+        }
+        
         return view('login');
     }
 
@@ -29,6 +34,11 @@ class LoginController extends Controller
     {
         if ($req->role == "teacher") 
         {
+            $this->validate($req, [
+                'id'        => 'required|exists:teacher',
+                'password'  => 'required|exists:teacher'
+            ]);
+
             $loginTeacher = DB::table('teacher') -> where('id', $req->id)
                                                  -> where('password', $req->password)
                                                  -> where('valid', 1)
@@ -39,17 +49,22 @@ class LoginController extends Controller
                 $req-> session()->put('id', $req->id);
                 $req-> session()->put('type', 'teacher');
 
-                return redirect()->route('dashboard.index');
+                return redirect()->route('dashboard.index')->with('success', 'Login successful!');
             }
 
             else
             {
-                return redirect()->route('login.index');
+                return redirect()->route('login.index')->with('error', 'Error logging in!');
             }
         }
 
         elseif ($req->role == "student") 
         {
+            $this->validate($req, [
+                'id'        => 'required|exists:student',
+                'password'  => 'required|exists:student'
+            ]);
+
             $loginStudent = DB::table('student') -> where('id', $req->id)
                                                  -> where('password', $req->password)
                                                  -> where('valid', 1)
@@ -60,17 +75,22 @@ class LoginController extends Controller
                 $req-> session()->put('id', $req->id);
                 $req-> session()->put('type', 'student');
 
-                return redirect()->route('dashboard.index');
+                return redirect()->route('dashboard.index')->with('success', 'Login successful!');
             }
 
             else
             {
-                return redirect()->route('login.index');
+                return redirect()->route('login.index')->with('error', 'Error logging in!');
             }
         }
 
         elseif ($req->role == "admin") 
         {
+            $this->validate($req, [
+                'id'        => 'required|exists:admin',
+                'password'  => 'required|exists:admin'
+            ]);
+            
             $loginAdmin = DB::table('admin') -> where('id', $req->id)
                                              -> where('password', $req->password)
                                              -> first();
@@ -80,12 +100,12 @@ class LoginController extends Controller
                 $req-> session()->put('id', $req->id);
                 $req-> session()->put('type', 'admin');
 
-                return redirect()->route('dashboard.index');
+                return redirect()->route('dashboard.index')->with('success', 'Login successful!');
             }
 
             else
             {
-                return redirect()->route('login.index');
+                return redirect()->route('login.index')->with('error', 'Error logging in!');
             }
         }
     }
@@ -93,6 +113,6 @@ class LoginController extends Controller
     public function logout(Request $req)
     {
         $req->session()->flush();
-        return redirect('/login');
+        return redirect()->route('login.index')->with('success', 'Logout successful!');
     }
 }

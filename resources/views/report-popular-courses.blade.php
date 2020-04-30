@@ -23,7 +23,10 @@
 									@endforeach
 								</tbody>
 							</table>
-							
+						
+						@else
+						<h5>No courses found!</h5>
+						
 						@endif
 					
 						@endsection

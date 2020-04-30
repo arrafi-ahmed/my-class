@@ -32,7 +32,7 @@ class SendMail extends Mailable
     {
         return $this->from("no-reply@myschool.cf") 
                     ->subject("New message from ".$this->data['senderName'])
-                    ->view('mail-content')
+                    ->view('contact-content')
                     ->with('data', $this->data);
     }
 }

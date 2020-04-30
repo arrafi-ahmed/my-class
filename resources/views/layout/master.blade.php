@@ -9,7 +9,10 @@
 		</nav>
 		
 		<main class="col-md-9 col-lg-10 ml-sm-auto px-4 py-6 main" role="main">
-			<h3 class="d-inline-block">
+			
+			@include('layout.dialog')
+
+			<h3 class="d-inline-block pb-3">
 				@yield('title')
 			</h3>
 
@@ -18,6 +21,9 @@
 
 		@else
 		<main class="col-md-10 col-lg-10 mx-auto px-4 py-6 main" role="main">
+			
+			@include('layout.dialog')
+
 			<h3>
 				@yield('title')
 			</h3>

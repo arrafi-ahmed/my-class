@@ -15,39 +15,63 @@ class ReportController extends Controller
 											 ->orderBy('number', 'desc')
 											 ->get();
 
-		return view('popular-courses', ['courses' => $courses]);
+		if (count($courses)>0) 
+        {
+            return view('report-popular-courses', ['courses' => $courses]);
+        }
+
+        else
+        {
+            return view('report-popular-courses');
+        }
     }
 
     public function historyGet()
     {
-    	return view('student-history');
+    	return view('report-student-history');
     }
 
     public function historyPost(Request $req)
     {
+        $this->validate($req, [
+            'studentId' => 'required|exists:student,id'
+        ]);
+
     	$histories = DB::table('result')->join('courses', 'result.courseId', '=', 'courses.id')
     								    ->select('result.*', 'courses.name', 'courses.section', 'courses.teacherId')
     								    ->where('studentId', $req->studentId)
     								    ->get();
 
-	    return view('student-history', ['histories'=>$histories]);
+	    if (count($histories)>0) 
+        {
+            return view('report-student-history', ['histories'=>$histories]);
+        }
+
+        else
+        {
+            return view('report-student-history');
+        }
     }
 
     public function gradesGet()
     {
-    	return view('good-grades');
+    	return view('report-good-grades');
     }
 
     public function gradesPost(Request $req)
     {
     	if ($req->session()->get('type') == "teacher") 
     	{
-    		$course = DB::table('courses')->where('id', $req->courseId)
+            $course = DB::table('courses')->where('id', $req->courseId)
 										   ->select('teacherId')
 										   ->first();
 
-    		if ($course->teacherId == session('id')) 
+    		if (isset($course) && $course->teacherId == session('id')) 
     		{
+                $this->validate($req, [
+                    'courseId' => 'required|exists:courses,id'
+                ]);
+
     			$results = DB::table('result')->where([['courseId', '=', $req->courseId],
 													   ['result', 	'like', 'A%']])
     										  ->orderBy('result', 'desc')
@@ -55,32 +79,38 @@ class ReportController extends Controller
 
 		 	    if (count($results)>0) 
 		 	    {
-		 	    	return view('good-grades', ['results'=>$results]);
+		 	    	return view('report-good-grades', ['results'=>$results]);
 		 	    }
+
 		 	    else 
 		 	    {
-		 	    	echo "No results found!";
+		 	    	return view('report-good-grades');
 		 	    }
 		 	}
     		else
     		{
-    			echo "Course is not registered under your ID!";
+    			return back()->with('error', 'Course is not registered under your ID!');
     		}
     	}
     	
     	else
     	{
+            $this->validate($req, [
+                'courseId' => 'required|exists:courses,id'
+            ]);
+
     		$results = DB::table('result')->where([['courseId', '=', $req->courseId],
 												   ['result', 	'like', 'A%']])
     									  ->orderBy('result', 'desc')
 										  ->get();
 			if (count($results)>0) 
 	 	    {
-	 	    	return view('good-grades', ['results'=>$results]);
+	 	    	return view('report-good-grades', ['results'=>$results]);
 	 	    }
+            
 	 	    else 
 	 	    {
-	 	    	echo "No results found!";
+	 	    	return view('report-good-grades');
 	 	    }									  
     	}
     }

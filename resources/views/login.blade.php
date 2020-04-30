@@ -5,10 +5,11 @@
 						@section('main')
 						
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-6 col-md-6 pt-3">
 								<img class="img-fluid" src="{{url('img/loginBanner.jpg')}}">
 							</div>
-							<div class="col-lg-6 col-md-6 col-sm-10">
+							<div class="col-lg-6 col-md-6 col-sm-10 pt-3">
+
 								<form method="post">
 									@csrf
 
@@ -46,6 +47,7 @@
 											</tr>
 										</tbody>
 									</table>
+									
 								</form>	
 							</div>
 						</div>

@@ -4,6 +4,22 @@
 
 						@section('main')
 
+						@if(isset($error))
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<ul>
+								<li>{{$error}}</li>
+							</ul>
+						</div>
+						@endif
+
+						@if(isset($success))
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{$success}}
+						</div>
+						@endif
+
 						<form method="post">
 							@csrf
 							<div class="input-group pt-3 pb-3">
@@ -12,14 +28,14 @@
 								
 								<div class="input-group-append">
 							    	<button class="btn btn-primary" type="submit" name="find" value="find">Find</button>
-							    	<button class="btn btn-success" type="submit" name="pay" value="pay">Pay</button>
+							    	<button class="btn btn-success ml-1" type="submit" name="pay" value="pay">Pay</button>
 								</div>
 
 								
 							</div>
 						</form>
 							
-						@if(isset($teacher))
+						@isset($teacher)
 						<div class="teacherInfo">
 							<img class="img-thumbnail d-inline-block mr-4 mb-3" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}">
 							<div class="d-inline-block">
@@ -30,7 +46,7 @@
 								<b>Email:</b> {{ $teacher->email }}<br>
 							</div>
 						</div>
-						@endif
+						@endisset
 
 						@if(isset($salaries))
 						<div class="table-responsive">
@@ -84,6 +100,9 @@
 								</tbody>
 							</table>
 						</div>
+
+						@elseif(!isset($salaries) && request('find'))
+						<h5>No salary record found!</h5>
 						@endif
 						
 						@endsection

@@ -14,6 +14,11 @@ class RegisterController extends Controller
      */
     public function index()
     {
+        if (session()->has('type')) 
+        {
+            return redirect()->route('dashboard.index');
+        }
+        
         return view('register');
     }
 
@@ -24,6 +29,17 @@ class RegisterController extends Controller
      */
     public function createTeacher(Request $req)
     {
+        $this->validate($req, [
+            'id'            => 'required|unique:teacher|max:20',
+            'password'      => 'required|min:5|max:50|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/',
+            'name'          => 'required',
+            'dept'          => 'required',
+            'qualification' => 'required',
+            'email'         => 'required|email',
+            'salary'        => 'required|numeric',
+            'profilePhoto'  => 'file|image'
+        ]);
+
         $profilePhoto = "default.jpg";
 
         if ($req->hasFile('profilePhoto')) {
@@ -46,10 +62,14 @@ class RegisterController extends Controller
             'valid'          => 0]
         );
 
-        if ($createTeacher) {
-            return redirect()->route('login.index');
-        }else{
-            return redirect()->route('register.index');
+        if ($createTeacher) 
+        {
+            return redirect()->route('login.index')->with('success', 'Registered successfully!');
+        }
+
+        else
+        {
+            return back()->with('error', 'Error registering the account!');
         }
     }
 
@@ -60,13 +80,24 @@ class RegisterController extends Controller
      */
     public function createStudent(Request $req)
     {
+        $this->validate($req, [
+            'id'            => 'required|unique:student|max:20',
+            'password'      => 'required|min:5|max:50|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/',
+            'name'          => 'required',
+            'dept'          => 'required',
+            'parentContact' => 'required',
+            'email'         => 'required|email',
+            'profilePhoto'  => 'file|image'
+        ]);
         
         $profilePhoto = "default.jpg";
 
-        if ($req->hasFile('profilePhoto')) {
+        if ($req->hasFile('profilePhoto')) 
+        {
             $file = $req->file('profilePhoto');
 
-            if ($file->move('upload/studentPhoto/', $req->id .'.'. $file->getClientOriginalExtension())) {
+            if ($file->move('upload/studentPhoto/', $req->id .'.'. $file->getClientOriginalExtension())) 
+            {
                 $profilePhoto = $req->id .'.'. $file->getClientOriginalExtension();
             }
         }
@@ -82,10 +113,14 @@ class RegisterController extends Controller
             'valid'         => 0]
         );
 
-        if ($createStudent) {
-            return redirect()->route('login.index');
-        }else{
-            return redirect()->route('register.index');
+        if ($createStudent) 
+        {
+            return redirect()->route('login.index')->with('success', 'Registered successfully!');
+        }
+        
+        else
+        {
+            return back()->with('error', 'Error registering the account!');
         }
     }
 }

@@ -5,8 +5,8 @@
 						@section('main')
 
 						@if(isset($teacher->id))
-							
-						@if ($session['id'] == $teacher->id && $session['type'] !== 'admin')
+
+						@if (session('id') == $teacher->id && session('type') !== 'admin')
 							<a href="{{route('profile.edit')}}">
 								<button type="button" class="btn btn-primary mb-2 float-right">
 								Edit Profile</button>
@@ -61,7 +61,7 @@
 						
 						@elseif(isset($student->id))
 						
-						@if ($session['id'] == $student->id && $session['type'] !== 'admin')
+						@if (session('id') == $student->id && session('type') !== 'admin')
 						<a href="{{route('profile.edit')}}"><button type="button" class="btn btn-primary float-right mb-2">
 							Edit Profile
 						</button></a>
@@ -111,6 +111,10 @@
 								</tr>
 							</tbody>
 						</table>
+						
+						@else
+						<h5>No profile found!</h5>
+
 						@endif
 						
 						@endsection

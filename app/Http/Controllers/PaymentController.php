@@ -7,12 +7,48 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
-    public function enroll($id, Request $req)
+	public function enroll($id=null, Request $req)
     {
-    	$session = $req->session()->all();
+    	//check courses->count
+		if ($id != null) 
+		{
+    		$course = DB::table('courses')->where('id', $id)
+	    								  ->select('count', 'capacity', 'status')
+	    								  ->first();
+
+		    $payment = DB::table('payment') ->where('payment.courseId', $id)
+											->where('payment.studentId', session('id'))
+											->first();
+
+			if(!isset($course))
+			{
+				return redirect()->route('courseList.index')->with('error', 'Access Denied!');
+			}
+	    	elseif ($course->count > ($course->capacity - 1)) 
+			{
+				return redirect()->route('courseList.index')->with('error', 'Course capacity full!');
+			}
+
+			elseif($course->status == 0)
+			{
+				return redirect()->route('courseList.index')->with('error', 'Course is not open!');
+			}
+
+			elseif(isset($payment->status) && $payment->status == 0)
+			{
+				return redirect()->route('courseList.index')->with('error', 'Course payment is under processing!');
+			}
+
+			elseif(isset($payment->status) && $payment->status == 1)
+			{
+				return redirect()->route('courseList.index')->with('error', 'Course payment already cleared!');
+			}
+    	}
+
+    	$course = $payments = null;
     	$course = DB::table('courses') -> where('id', $id) 
     								   -> first();
-		$studentId = $session['id'];
+		$studentId = session('id');
 		$payments = DB::table('payment') -> join('courses', function($join) use ($studentId)
 											{
 												$join-> on('payment.courseId', '=', 'courses.id')
@@ -22,22 +58,42 @@ class PaymentController extends Controller
 										 -> orderBy('payment.id', 'desc')
 										 -> get();
 
-		return view('make-payment', ['course'=>$course, 'payments'=>$payments, 'session'=>$session]);
+		return view('payment-create', ['course'=>$course, 'payments'=>$payments]);	
     } 
 
-    public function create($id, Request $req)
+    public function create(Request $req)
     {
-    	$session = $req->session()->all();
+    	$this->validate($req, [
+    		'amount'	=>	'required|numeric',
+    		'method'	=>	'required',
+    		'refNo'		=>	'required'
+    	]);
+
+    	//check courses->count
+		$course = DB::table('courses')->where('id', $req->courseId)
+    								 ->select('count', 'capacity')
+    								 ->first();
+
+    	if ($course->count > ($course->capacity - 1)) 
+		{
+			return back()->with('error', 'Access Denied!');
+		}
+		
+    	//insert into tables
     	$payment = DB::table('payment') -> insert(['amount' 	=> $req->amount,
     											   'method' 	=> $req->method,
     											   'refNo'  	=> $req->refNo,
-    											   'courseId' 	=> $id,
+    											   'courseId' 	=> $req->courseId,
     											   'status' 	=> 0,
-    											   'studentId' 	=> $session['id']]); 
+    											   'studentId' 	=> session('id')]); 
 
-    	$choose_course = DB::table('choose_course') -> insert(['courseId' 	=> $id,
-			    											   'studentId' 	=> $session['id']]); 
-		$studentId = $session['id'];
+    	$choose_course = DB::table('choose_course') -> insert(['courseId' 	=> $req->courseId,
+			    											   'studentId' 	=> session('id')]); 
+
+    	$updateCount = DB::table('courses') -> where('id', $req->courseId)
+											->update(['count' => $course->count + 1]);
+
+		$studentId = session('id');
 		$payments = DB::table('payment') -> join('courses', function($join) use ($studentId)
 											{
 												$join-> on('payment.courseId', '=', 'courses.id')
@@ -46,52 +102,89 @@ class PaymentController extends Controller
 										 -> select('payment.*', 'courses.name', 'courses.section')
 										 -> orderBy('payment.id', 'desc')
 										 -> get(); 	
-		if ($payment && $choose_course)
+
+		if ($payment && $choose_course && $updateCount)
 		{
-			return view('make-payment', ['payments'=>$payments, 'session'=>$session]);				
+			return view('payment-create', ['payments'=>$payments]);				
 	   	}	
+
 	   	else
 	   	{
-	   		return redirect()->route('payment.enroll', $id);
+	   		return redirect()->route('payment.enroll', $req->courseId);
 	   	}							 
-		
     }
 
 	public function modify(Request $req)
     {
-    	$session = $req->session()->all();
-    	if ($session['type'] == 'admin') 
-    	{
-    		$find = null;
+    	$find = null;
 
-			if (isset($req->find) || isset($req->update)) 
+    	if ($req->has('find') || $req->has('update')) 
+		{
+			if ($req->has('update'))
     		{
-    			if (isset($req->update))
-	    		{
-	    			$update = DB::table('payment') -> where('id', $req->paymentId)
-	    										   -> update(['amount' => $req->amount,
-	    										   			  'method' => $req->method,
-	    										   			  'refNo'  => $req->refNo,
-	    										   			  'status' => $req->status ]);
-	    		}
+    			$this->validate($req, [
+		    		'amount'	=>	'required|numeric',
+		    		'method'	=>	'required',
+		    		'refNo'		=>	'required'
+		    	]);
 
-    			$paymentId = $req->paymentId;
-    			$find = DB::table('payment')-> join('courses', function($join) use ($paymentId)
-												{
-													$join-> on('payment.courseId', '=', 'courses.id')
-													 	 -> where('payment.id', '=', $paymentId);
-												})
-												-> select('payment.*', 'courses.fee')
-												-> first(); 	
+    			$update = DB::table('payment') -> where('id', $req->paymentId)
+    										   -> update(['amount' => $req->amount,
+    										   			  'method' => $req->method,
+    										   			  'refNo'  => $req->refNo,
+    										   			  'status' => $req->status ]);
     		}
 
-    		$payments = DB::table('payment')-> join('courses', 'payment.courseId', '=', 'courses.id')
-	    								    -> select('payment.*', 'courses.name', 'courses.section')
-	    								    -> orderBy('payment.id', 'desc')
-	    								    -> limit(50)
-									   		-> get(); 
+			$paymentId = $req->paymentId;
+			$find = DB::table('payment')-> join('courses', function($join) use ($paymentId)
+											{
+												$join-> on('payment.courseId', '=', 'courses.id')
+												 	 -> where('payment.id', '=', $paymentId);
+											})
+											-> select('payment.*', 'courses.fee')
+											-> first(); 	
+		}
 
-    		return view('modify-payment', ['payments'=>$payments, 'find'=>$find]);
-    	}
-    }
+		if ($req->has('delete')) 
+		{
+			$delete = DB::table('payment')->where('id', $req->paymentId)
+										  ->delete();
+
+		    $course = DB::table('courses')->where('id', $req->courseId)
+		    							   ->select('count')
+		    							   ->first();
+			if ($course->count > 0) 
+			{
+				$update = DB::table('courses')->where('id', $req->courseId)
+											 ->update(['count' => $course->count - 1]);
+
+				if ($update) 
+				{
+					return back()->with('success', 'Payment entry deleted successfully!');
+				}
+
+				else
+				{
+					return back()->with('error', 'Error deleting entry!');
+				}
+				
+			}
+		}
+
+		$payments = DB::table('payment')-> join('courses', 'payment.courseId', '=', 'courses.id')
+    								    -> select('payment.*', 'courses.name', 'courses.section')
+    								    -> orderBy('payment.id', 'desc')
+    								    -> limit(100)
+								   		-> get(); 
+
+		if (count($payments)>0) 
+		{
+			return view('payment-modify', ['payments'=>$payments, 'find'=>$find]);
+		}
+
+		else
+		{
+			return view('payment-modify', ['find'=>$find]);
+		}
+	}
 }

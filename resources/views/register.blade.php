@@ -5,10 +5,10 @@
 						@section('main')
 
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-6 col-md-6 pt-3">
 								<img class="img-fluid" src="{{url('img/registerBanner.jpg')}}">
 							</div>
-							<div class="col-lg-6 col-md-6 col-sm-10">
+							<div class="col-lg-6 col-md-6 col-sm-10 pt-3">
 
 								<div class="tabbable" id="tabs-963489">
 									<ul class="nav nav-tabs">
@@ -23,7 +23,8 @@
 									<!-- Teacher -->
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
-											<form method="post" action="registerTeacher" enctype="multipart/form-data" name="teacher">
+
+											<form method="post" action="registerT" enctype="multipart/form-data" name="teacher">
 												@csrf
 
 												<table class="table">
@@ -91,7 +92,7 @@
 
 										<!-- Student -->
 										<div class="tab-pane" id="tab2">
-											<form method="post" action="registerStudent" enctype="multipart/form-data" name="student">
+											<form method="post" action="registerS" enctype="multipart/form-data" name="student">
 												@csrf
 
 												<table class="table">

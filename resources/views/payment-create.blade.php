@@ -1,10 +1,13 @@
 						@extends('layout.master')
 
-						@section('title', 'Make Payment')
+						@section('title', 'Payment')
 
 						@section('main')
 
-						<form method="post" action="{{route('payment.create', $course->id)}}">
+						@isset($course)
+
+						<h4>Make Payment</h4>
+						<form method="post">
 							@csrf
 							<table class="table">
 								<thead>
@@ -56,9 +59,11 @@
 								</tbody>
 							</table>
 						</form>
-						@endif
+						@endisset
 						
-						<h3>Recent Payments</h3>
+						<h4>Recent Payments</h4>
+
+						@if(count($payments)>0)
 						<table class="table">
 							<thead>
 								<tr>
@@ -120,5 +125,10 @@
 								
 							</tbody>
 						</table>
+
+						@else
+						<h5>No recent payment found!</h5>
+
+						@endif
 						
 						@endsection

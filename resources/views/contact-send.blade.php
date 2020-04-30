@@ -4,25 +4,8 @@
 
 						@section('main')
 
-						@if(count($errors) > 0)
-						<div class="alert alert-danger alert-dismissible fade show" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<ul>
-							@foreach($errors->all() as $error)
-								<li>{{$error}}</li>
-							@endforeach
-							</ul>
-						</div>
-						@endif
-
-						@if($success = Session::get('success'))
-						<div class="alert alert-success alert-dismissible fade show" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							{{$success}}
-						</div>
-						@endif
-
-						<form method="post" action="{{route('contact.send')}}">
+						@if(isset($contact))
+						<form method="post" action="send">
 							@csrf
 							<table class="table">
 								<tbody>
@@ -99,7 +82,7 @@
 									<tr>
 										<td></td>
 										<td class="input-group">
-											<button type="submit" name="send" value="send" class="btn btn-primary">
+											<button type="submit" name="send" value="send" class="btn btn-primary btn-block">
 												Send
 											</button>
 										</td>
@@ -108,5 +91,6 @@
 								</tbody>
 							</table>
 						</form>
-						
+						@endif 
+
 						@endsection

@@ -14,9 +14,15 @@
 .navbar-dark .navbar-nav .nav-link:hover {
     color: rgba(255,255,255,.95);
 }
-.nav-link:active {
-    color: #fff;
+.nav-item.active {
+    color: #ffffff!important;
     background-color: #007bff;
+}
+.nav-item.active a{
+    color: #ffffff;
+}
+.dropdown-item{
+    color: #007bff!important;
 }
 .footer{
     position: fixed;
@@ -30,4 +36,16 @@
 }
 .profile img{
     width: 10rem;
+}
+.sidebar{
+    height:  100vh;
+}
+.teacherInfo img{
+    max-width: 250px;
+}
+.table-custom tr{
+    border-bottom: 1px solid #dee2e6;
+}
+.table-custom tr:last-child{
+    border-bottom: none;
 }

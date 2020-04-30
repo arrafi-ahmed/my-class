@@ -4,7 +4,7 @@
 
 						@section('main')
 
-						@if($session['type'] == "teacher")
+						@if(session('type') == "teacher" && isset($teacher))
 						<form method="post" name="teacher">
 							@csrf
 							<table class="table profile">
@@ -58,8 +58,9 @@
 										</td>
 									</tr>
 									<tr>
+										<td></td>
 										<td>
-											<button type="submit" class="btn btn-primary">
+											<button type="submit" class="btn btn-primary btn-block">
 												Save
 											</button> 	
 										</td>
@@ -68,7 +69,7 @@
 							</table>
 						</form>
 						
-						@elseif($session['type'] == "student")
+						@elseif(session('type') == "student" && isset($student))
 						<form method="post" name="student">
 							@csrf
 							<table class="table profile">
@@ -122,9 +123,10 @@
 										</td>
 									</tr>
 									<tr>
+										<td></td>
 										<td>
-											<button type="submit" class="btn btn-primary">
-												Submit
+											<button type="submit" class="btn btn-primary btn-block">
+												Save
 											</button>
 										</td>
 									</tr>

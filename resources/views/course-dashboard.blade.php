@@ -4,6 +4,7 @@
 
 						@section('main')
 
+						@if(isset($course))
 						<div class="row">
 							<div class="col-md-6">
 								<div class="row">
@@ -45,6 +46,8 @@
 								</table>
 							</div>
 						</div>
+						@endif
+
 						<div class="tabbable" id="tabs-843462">
 							<ul class="nav nav-tabs">
 								<li class="nav-item">
@@ -61,7 +64,7 @@
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab1">
 
-									@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
+									@if(session('type') == "admin" || (session('type') == "teacher" && session('id') == "$teacher->id"))
 									<div class="pt-3 pb-3">
 
 										<form method="post" action="{{route('courseDashboard.createNote', $course->id)}}" enctype="multipart/form-data">
@@ -80,6 +83,7 @@
 									</div>
 									@endif
 
+									@if (count($notes)>0)
 									<table class="table">
 										<thead>
 											<tr>
@@ -112,22 +116,27 @@
 											@endforeach
 										</tbody>
 									</table>
+									
+									@else
+									<h6 class="mt-2">No notes uploaded yet!</h6>
+									@endif
+
 								</div>
 
 								<div class="tab-pane" id="tab2">
 
-									@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
+									@if(session('type') == "admin" || (session('type') == "teacher" && session('id') == "$teacher->id"))
 									<div class="pt-3 pb-3">
 										<form method="post" action="{{route('courseDashboard.createNotice', $course->id)}}">
 											@csrf
 											Create Notice: 
-											<!-- <input type="hidden" name="courseId" value="{{$course->id}}"> -->
 											<textarea class="form-control" aria-label="With textarea"  name="content"></textarea>
 											<button type="submit" class="btn btn-primary">Create Notice</button>	
 										</form>
 									</div>
 									@endif
 
+									@if (count($notices)>0)
 									<table class="table">
 										<thead>
 											<tr>
@@ -155,10 +164,16 @@
 											
 										</tbody>
 									</table>
+									
+									@else
+									<h6 class="mt-2">No notice published yet!</h6>
+
+									@endif
 								</div>
 
 								<div class="tab-pane" id="tab3">
-									@if($session['type'] == "admin" || ($session['type'] == "teacher" && $session['id'] == "$teacher->id"))
+									@if(session('type') == "admin" || (session('type') == "teacher" && session('id') == "$teacher->id"))
+									@if(count($students)>0)
 									<table class="table">
 										<thead>
 											<tr>
@@ -216,12 +231,17 @@
 											@endforeach
 										</tbody>
 									</table>
+									
+									@else
+									<h6 class="mt-2">No student found!</h6>
+
+									@endif
 									@endif
 
 									<h6 class="text-center">
-									@if($session['type'] == "student")
+									@if(session('type') == "student")
 										@if(isset($students->result))
-											@php echo "<br> Grade: ".$students->result ; @endphp
+											@php echo "<br> Grade: ".$studentResult->result ; @endphp
 										@else
 											@php echo "<br> Result not available. "; @endphp
 										@endif

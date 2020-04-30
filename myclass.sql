@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 11:27 AM
+-- Generation Time: Apr 30, 2020 at 11:05 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `coaching`
+-- Database: `myclass`
 --
 
 -- --------------------------------------------------------
@@ -57,9 +57,9 @@ CREATE TABLE `choose_course` (
 --
 
 INSERT INTO `choose_course` (`id`, `courseId`, `studentId`) VALUES
-(1, 3, 'student1'),
-(3, 5, 'student2'),
-(4, 3, 'student2');
+(29, 11, 'student1'),
+(30, 6, 'student1'),
+(31, 6, 'student2');
 
 -- --------------------------------------------------------
 
@@ -69,11 +69,12 @@ INSERT INTO `choose_course` (`id`, `courseId`, `studentId`) VALUES
 
 CREATE TABLE `courses` (
   `id` int(10) NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `section` varchar(2) NOT NULL,
   `time` varchar(20) NOT NULL,
   `roomNo` varchar(10) NOT NULL,
   `capacity` int(3) NOT NULL,
+  `count` int(3) DEFAULT 0,
   `teacherId` varchar(10) NOT NULL,
   `fee` int(5) NOT NULL,
   `status` tinyint(1) NOT NULL
@@ -83,10 +84,12 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `section`, `time`, `roomNo`, `capacity`, `teacherId`, `fee`, `status`) VALUES
-(3, 'Intro to Math', 'A', 'Sun 10-12pm', '3112', 40, 'teacher1', 1500, 1),
-(5, 'Intro to English', 'B', 'Thu 9.30 am', '1101', 30, 'teacher1', 2000, 0),
-(6, 'Intro to Algo', 'C', 'Mon 3pm', '2112', 45, 'teacher2', 3000, 1);
+INSERT INTO `courses` (`id`, `name`, `section`, `time`, `roomNo`, `capacity`, `count`, `teacherId`, `fee`, `status`) VALUES
+(3, 'Math 101', 'A', 'Sun 10-12pm', '3113', 40, 40, 'teacher1', 3500, 1),
+(5, 'English 101', 'B', 'Mon 10-12pm', '2112', 40, 0, 'teacher2', 2000, 1),
+(6, 'Intro to Algo', 'B', 'Tue 10-12pm', '1112', 40, 2, 'teacher1', 3000, 1),
+(11, 'Economics 101', 'B', 'Thu 12-2pm', '1121', 40, 1, 'teacher3', 2000, 1),
+(12, 'Programming Language 101', 'A', 'Wed 10-12pm', '3323', 40, 0, 'teacher2', 2500, 0);
 
 -- --------------------------------------------------------
 
@@ -107,8 +110,8 @@ CREATE TABLE `note` (
 --
 
 INSERT INTO `note` (`id`, `filename`, `courseId`, `date`, `size`) VALUES
-(24, 'assignment.docx', 3, '2020-04-14 15:37:48', 0.029),
-(25, 'Tour management system.doc', 3, '2020-04-14 15:38:10', 0.018);
+(26, 'assignment.docx', 3, '2020-04-26 07:55:20', 0.029),
+(35, 'assignment.docx', 6, '2020-04-30 15:03:19', 0.029);
 
 -- --------------------------------------------------------
 
@@ -128,8 +131,8 @@ CREATE TABLE `notice` (
 --
 
 INSERT INTO `notice` (`id`, `content`, `courseId`, `date`) VALUES
-(3, 'adsfasdf', 3, '2020-04-14 12:25:20'),
-(4, 'Idfdsfdsf', 3, '2020-04-14 12:31:05');
+(5, 'Quiz 1 @ sunday', 6, '2020-04-28 01:08:42'),
+(6, 'Result published', 6, '2020-04-28 01:11:46');
 
 -- --------------------------------------------------------
 
@@ -153,16 +156,9 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id`, `amount`, `method`, `refNo`, `courseId`, `date`, `status`, `studentId`) VALUES
-(1, 3000, 'bKash', '98987889797', 6, '2020-04-16 23:42:42', 1, 'student1'),
-(2, 3000, 'bKash', '98987889790', 6, '2020-04-16 23:46:45', 1, 'student1'),
-(3, 2500, 'Upay', '009898767', 6, '2020-04-16 23:54:03', 1, 'student1'),
-(4, 500, 'Upay', '7887979', 6, '2020-04-17 00:40:44', 0, 'student1'),
-(5, 300, 'Upay', '686869797', 6, '2020-04-18 13:40:43', 0, 'student1'),
-(6, 300, 'Upay', '686869797', 6, '2020-04-18 13:42:23', 0, 'student1'),
-(7, 300, 'Upay', '686869797', 6, '2020-04-18 13:42:28', 1, 'student1'),
-(8, 3000, 'Union', '56598232', 6, '2020-04-21 12:08:00', 0, 'student1'),
-(9, 3000, 'Union', '56598232', 6, '2020-04-21 12:08:39', 0, 'student1'),
-(10, 3000, 'Lojk', '000012', 6, '2020-04-21 12:12:06', 0, 'student1');
+(32, 2000, 'bKash', '3409509', 6, '2020-04-30 14:53:47', 1, 'student1'),
+(33, 2500, 'Upay', '99023902', 5, '2020-04-30 14:55:02', 0, 'student1'),
+(34, 3000, 'bKash', '00223293', 6, '2020-04-30 15:01:56', 1, 'student2');
 
 -- --------------------------------------------------------
 
@@ -182,9 +178,8 @@ CREATE TABLE `result` (
 --
 
 INSERT INTO `result` (`id`, `result`, `courseId`, `studentId`) VALUES
-(4, 'A', 3, 'student1'),
-(28, 'A+', 3, 'student2'),
-(29, 'A-', 6, 'student1');
+(30, 'A', 6, 'student1'),
+(31, 'B', 6, 'student2');
 
 -- --------------------------------------------------------
 
@@ -199,17 +194,6 @@ CREATE TABLE `salary` (
   `status` tinyint(1) NOT NULL,
   `teacherId` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `salary`
---
-
-INSERT INTO `salary` (`id`, `amount`, `date`, `status`, `teacherId`) VALUES
-(1, 100000, '2020-04-20 00:56:58', 1, 'teacher1'),
-(2, 100000, '2020-04-20 00:58:55', 1, 'teacher1'),
-(3, 100000, '2020-04-20 02:14:02', 1, 'teacher1'),
-(4, 100000, '2020-04-20 02:14:19', 0, 'teacher1'),
-(5, 80000, '2020-04-20 02:14:38', 1, 'teacher2');
 
 -- --------------------------------------------------------
 
@@ -233,8 +217,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `password`, `name`, `dept`, `parentContact`, `email`, `profilePhoto`, `valid`) VALUES
-('student1', 'asdf', 'Chris Russel', 'CSE', '+323652323', 's1@mail.com', 'student1.jpg', 1),
-('student2', 'asdf', 'Maria Giles', 'Business', '+23265656', 's2@mail.com', 'student2.jpg', 1);
+('student1', 'aA11!', 'Chris Russel', 'SE', '+3236523231', 's1@mail.com', 'student1.jpg', 1),
+('student2', 'aA11!', 'Maria Giles', 'Business', '+23265656', 's2@mail.com', 'student2.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -259,8 +243,9 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id`, `password`, `name`, `dept`, `qualification`, `email`, `salary`, `profilePhoto`, `valid`) VALUES
-('teacher1', 'asdf', 'Bill Gates', 'CSE', 'Phd, Harvard', 't1@mail.com', 100000, 'teacher1.jpg', 1),
-('teacher2', 'asdf', 'Mark Zuck', 'CS', 'Bachelors, Harvard', 't2@mail.com', 80000, 'teacher2.jpg', 1);
+('teacher1', 'aA11!', 'Bill Gates', 'CS', 'Phd, Harvard', 't1@mail.com', 100000, 'teacher1.jpg', 1),
+('teacher2', 'aA11!', 'Mark Zuck', 'CS', 'Bachelors, Harvard', 't2@mail.com', 80000, 'teacher2.jpg', 1),
+('teacher3', 'aA11!', 'Jeff Bezos', 'BBA', 'PhD, Cambridge', 't3@mail.com', 120000, 'teacher3.jpg', 0);
 
 --
 -- Indexes for dumped tables
@@ -334,43 +319,43 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `choose_course`
 --
 ALTER TABLE `choose_course`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `note`
 --
 ALTER TABLE `note`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `result`
 --
 ALTER TABLE `result`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `salary`
 --
 ALTER TABLE `salary`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

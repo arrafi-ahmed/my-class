@@ -16,30 +16,102 @@ class SalaryController extends Controller
     {
     	if (isset($req->find) || isset($req->pay) || isset($req->save)) 
     	{
+            $this->validate($req, [
+                'teacherId' => 'required|exists:teacher,id'
+            ]);
+
             $teacher  = DB::table('teacher')->where('id', $req->teacherId)
                                             ->first();
-
+            
             if (isset($req->pay) && isset($teacher))
             {
-                // $amount = $teacher->salary;
-                DB::table('salary')->insert(['amount'   =>$teacher->salary,
+                $pay = DB::table('salary')->insert(['amount'   =>$teacher->salary,
                                              'status'   =>1,
                                              'teacherId'=>$req->teacherId]);
+
+                $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
+                                           ->orderBy('id', 'desc')
+                                           ->get();
+            
+                if(count($salaries)<0 && $pay)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'success'=>'Action performed successfully!']);
+                }
+
+                elseif (count($salaries)>0 && $pay)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries, 'success'=>'Action performed successfully!']); 
+                }
+
+                elseif(count($salaries)<0 && !$pay)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'error'=>'Error performing the action!']);
+                }
+
+                elseif (count($salaries)>0 && !$pay)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries, 'error'=>'Error performing the action!']); 
+                }
+
+                else
+                {
+                    return view('salary', ['teacher'=>$teacher]); 
+                }   
             }
 
             elseif (isset($req->save))
             {
-                DB::table('salary') ->where('id', $req->salaryId)
+                $this->validate($req, [
+                    'amount' => 'required|numeric'
+                ]);
+
+                $save = DB::table('salary') ->where('id', $req->salaryId)
                                     ->update(['amount'  =>$req->amount,
                                               'status'   =>$req->status]);
+
+                $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
+                       ->orderBy('id', 'desc')
+                       ->get();
+            
+                if(count($salaries)<0 && $save)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'success'=>'Action performed successfully!']);
+                }
+
+                elseif (count($salaries)>0 && $save)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries, 'success'=>'Action performed successfully!']); 
+                }
+
+                elseif(count($salaries)<0 && !$save)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'error'=>'Error performing the action!']);
+                }
+
+                elseif (count($salaries)>0 && !$save)
+                {
+                    return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries, 'error'=>'Error performing the action!']); 
+                }
+
+                else
+                {
+                    return view('salary', ['teacher'=>$teacher]); 
+                }   
             }
 
             $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
-                                           ->orderBy('id', 'desc')
-                                           ->get();
-            
-            // print_r($req->salaryId, $req->status);
-            return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries]); 
+                       ->orderBy('id', 'desc')
+                       ->get();
+
+            if (count($salaries)>0)
+            {
+                return view('salary', ['teacher'=>$teacher, 'salaries'=>$salaries]); 
+            }
+
+            else
+            {
+                return view('salary', ['teacher'=>$teacher]); 
+            }   
     	}
     }
 }

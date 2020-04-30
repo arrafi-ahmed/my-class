@@ -14,15 +14,15 @@ class ContactController extends Controller
     	$teachers = DB::table('teacher')->orderBy('dept','desc')
     									->get();
 
-    	return view('contact', ['teachers'=>$teachers]);
-    }
+    	if(count($teachers)>0)
+        {
+            return view('contact', ['teachers'=>$teachers]);    
+        }
 
-    public function contact(Request $req)
-    {
-		$contact = DB::table('teacher')->where('id', $req->teacherId)
-								       ->first();
-
-    	return view('contact', ['contact'=>$contact]);
+        else
+        {
+            return view('contact');    
+        }
     }
 
     public function content($id, Request $req)
@@ -30,7 +30,15 @@ class ContactController extends Controller
 		$contact = DB::table('teacher')->where('id', $id)
 								       ->first();
     	
-    	return view('send-email', ['contact'=>$contact]);
+        if($contact)
+        {
+            return view('contact-send', ['contact'=>$contact]);
+        }
+
+        else
+        {
+            return back()->with('error', 'Error contacting the account!');
+        }
     }
 
     public function send(Request $req)
@@ -44,8 +52,17 @@ class ContactController extends Controller
     	$data = ['senderName' 	=> $req->senderName, 
     			 'senderEmail' 	=> $req->senderEmail, 
     			 'message' 		=> $req->message ];
-    	Mail::to($req->email)->send(new SendMail($data));
-    	
-    	return back()->with('success', 'Message sent successfully!');
+
+        Mail::to($req->email)->send(new SendMail($data));
+
+        if (Mail::failures()) 
+        {
+            return back()->with('error', 'Email sending failed!');
+        }
+        
+        else
+        {
+            return redirect()->route('contact.index')->with('success', 'Email sent successfully!');     
+        }
     }
 }

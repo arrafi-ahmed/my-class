@@ -1,9 +1,10 @@
 						@extends('layout.master')
 
-						@section('title', 'Student List')
+						@section('title', 'Teacher List')
 
 						@section('main')
 
+						@if(isset($teachers))
 						<table class="table">
 							<thead>
 								<tr>
@@ -24,34 +25,35 @@
 									</th>
 								</tr>
 							</thead>
+
 							<tbody>
-								@foreach ($students as $student)
+								@foreach ($teachers as $teacher)
 								<tr>
 									<td>
-										{{$student->id}}
+										{{$teacher->id}}
 									</td>
 									<td>
-										{{$student->name}}
+										{{$teacher->name}}
 									</td>
 									<td>
-										{{$student->dept}}
+										{{$teacher->dept}}
 									</td>
 									<td>
-										{{$student->valid ? "Approved" : "Blocked"}}
+										{{$teacher->valid ? "Approved" : "Blocked"}}
 									</td>
 									<td>
 										<form method="post">
 
 											@csrf
-											<button type="submit" name="approve" value="{{$student->id}}" class="btn btn-success">
+											<button type="submit" name="approve" value="{{$teacher->id}}" class="btn btn-success">
 												Approve
 											</button>
 											
-											<button type="submit" name="block" value="{{$student->id}}" class="btn btn-warning">
+											<button type="submit" name="block" value="{{$teacher->id}}" class="btn btn-warning">
 												Block
 											</button>
-
-											<button type="submit" name="delete" value="{{$student->id}}" class="btn btn-danger">
+											
+											<button type="submit" name="delete" value="{{$teacher->id}}" class="btn btn-danger">
 												Delete
 											</button>
 
@@ -62,5 +64,10 @@
 								
 							</tbody>
 						</table>
-
+						
+						@else
+						<h5>No teacher found!</h5>
+						
+						@endif
+						
 						@endsection

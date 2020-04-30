@@ -26,6 +26,7 @@
 									<th>Result</th>
 								</tr>
 
+								<h5 class="pt-1 pb-2">Amount of students: @php echo count($results); @endphp</h5>
 								@foreach($results as $result)
 								<tr>
 									<td>{{$result->courseId}}</td>
@@ -35,6 +36,10 @@
 								@endforeach
 							</tbody>
 						</table>
+
+						@elseif(!isset($results) && request('generate'))
+						<h5>No result found!</h5>
+
 						@endif
 					
 						@endsection

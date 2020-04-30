@@ -13,71 +13,71 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get ('/', 			 	 'LoginController@root')->name('login.root');
-Route::get ('/login', 			 'LoginController@index')->name('login.index');
-Route::post('/login', 	 		 'LoginController@login');
-Route::get ('/logout', 			 'LoginController@logout')->name('logout.index');
+Route::get('/', 	      'LoginController@root')->name('login.root');
+Route::get('/login', 	  'LoginController@index')->name('login.index');
+Route::post('/login', 	  'LoginController@login');
+Route::get('/logout', 	  'LoginController@logout')->name('logout.index');
 
-Route::get ('/register',  		 'RegisterController@index')->name('register.index');
-Route::post('/registerTeacher',	 'RegisterController@createTeacher');
-Route::post('/registerStudent',	 'RegisterController@createStudent');
+Route::get('/register',   'RegisterController@index')->name('register.index');
+Route::post('/registerT', 'RegisterController@createTeacher');
+Route::post('/registerS', 'RegisterController@createStudent');
 
-Route::get ('/dashboard',		 'DashboardController@index')->name('dashboard.index');
+Route::get('/contact', 	   	  'ContactController@index')->name('contact.index');
+Route::get('/contact/{id}',   'ContactController@content')->name('contact.content');
+Route::post('/contact/{id}',  'ContactController@send');
 
-Route::get ('/approve-teacher',  'ApproveTeacherController@index')->name('approveTeacher.index');
-Route::post('/approve-teacher',  'ApproveTeacherController@approve');
+Route::middleware([checkSession::class])->group(function(){		//Middleware Group
 
-Route::get ('/approve-student',  'ApproveStudentController@index')->name('approveStudent.index');
-Route::post('/approve-student',  'ApproveStudentController@approve');
+Route::get('/dashboard',  'DashboardController@index')->name('dashboard.index');
 
-Route::get ('/profile/edit',	 'ProfileController@edit')->name('profile.edit');
-Route::post('/profile/edit',     'ProfileController@update');
-Route::get ('/profile/{id}',	 'ProfileController@view')->name('profile.view');
-Route::post('/search',			 'ProfileController@search')->name('profile.search');
+Route::get('/approve/teacher',    'ApproveController@teacherIndex')->name('approveTeacher.index')->middleware('roles:admin');
+Route::post('/approve/teacher',   'ApproveController@teacherApprove')							 ->middleware('roles:admin');
 
-Route::get ('/create-course',	 'CreateCourseController@index')->name('createCourse.index');
-Route::post('/create-course',	 'CreateCourseController@create');
+Route::get('/approve/student',    'ApproveController@studentIndex')->name('approveStudent.index')->middleware('roles:admin');
+Route::post('/approve/student',   'ApproveController@studentApprove')							 ->middleware('roles:admin');
 
-Route::get ('/course-list', 	  		  'CourseListController@index')->name('courseList.index');
-Route::get ('/course-list/open/{id}', 	  'CourseListController@open')->name('courseList.open');
-Route::get ('/course-list/close/{id}', 	  'CourseListController@close')->name('courseList.close');
-Route::get ('/course-list/delete/{id}',   'CourseListController@delete')->name('courseList.delete');
+Route::get('/profile/edit',		  'ProfileController@edit')->name('profile.edit')		->middleware('roles:teacher,student');
+Route::post('/profile/edit',      'ProfileController@update')							->middleware('roles:teacher,student');
+Route::post('/search',			  'ProfileController@search')->name('profile.search')	->middleware('roles:teacher,admin');
+Route::get('/profile/{id}',		  'ProfileController@view')->name('profile.view')		->middleware('roles:teacher,student');
 
-Route::get ('/edit-course/{id}',  		  'EditCourseController@index')->name('editCourse.index');
-Route::post('/edit-course/{id}', 		  'EditCourseController@update');
+Route::get('/courses', 	  	   	   'CourseListController@index')->name('courseList.index');
+Route::get('/courses/{id}/open',   'CourseListController@open')->name('courseList.open')		->middleware('roles:admin');
+Route::get('/courses/{id}/close',  'CourseListController@close')->name('courseList.close')		->middleware('roles:admin');
+Route::get('/courses/{id}/delete', 'CourseListController@delete')->name('courseList.delete')	->middleware('roles:admin');
 
-Route::get ('/course-dashboard/{id}',	  'CourseDashboardController@index')->name('courseDashboard.index');
+Route::get('/courses/create',	  'CourseListController@createGet')->name('createCourse.index')	->middleware('roles:teacher,admin');
+Route::post('/courses/create',	  'CourseListController@createPost')							->middleware('roles:teacher,admin');
 
-Route::get ('/course-dashboard/{id}#tab1',  			 'CourseDashboardController@index')->name('courseDashboard1.index');
-Route::post('/course-dashboard/{id}/createNote',  	 	 'CourseDashboardController@createNote')->name('courseDashboard.createNote');
-Route::get ('/course-dashboard/{filename}/downloadNote', 'CourseDashboardController@downloadNote')->name('courseDashboard.downloadNote');
+Route::get('/course/{id}/edit',   'CourseListController@editGet')->name('editCourse.index')	->middleware('roles:admin');
+Route::post('/course/{id}/edit',  'CourseListController@editPost')							->middleware('roles:admin');
 
-Route::get ('/course-dashboard/{id}#tab2',  			 'CourseDashboardController@index')->name('courseDashboard2.index');
-Route::post('/course-dashboard/{id}/createNotice',   	 'CourseDashboardController@createNotice')->name('courseDashboard.createNotice');
+Route::get('/course/{id}',        'CourseDashboardController@index')->name('courseDashboard.index');
 
-Route::get ('/course-dashboard/{id}#tab3',	 			 'CourseDashboardController@index')->name('courseDashboard3.index');
-Route::post('/course-dashboard/{id}/saveResult',		 'CourseDashboardController@saveResult')->name('courseDashboard.saveResult');
+Route::get('/course/{id}#tab1',   'CourseDashboardController@index')->name('courseDashboard1.index');
+Route::post('/course/{id}/note',  'CourseDashboardController@createNote')->name('courseDashboard.createNote')		->middleware('roles:teacher,admin');
+Route::get('/course/{name}/note', 'CourseDashboardController@downloadNote')->name('courseDashboard.downloadNote');
 
-Route::get ('/payment/{id}',	'PaymentController@enroll')->name('payment.enroll');
-Route::post('/payment/{id}',   	'PaymentController@create')->name('payment.create');
+Route::get('/course/{id}#tab2',    'CourseDashboardController@index')->name('courseDashboard2.index');
+Route::post('/course/{id}/notice', 'CourseDashboardController@createNotice')->name('courseDashboard.createNotice')	->middleware('roles:teacher,admin');
 
-Route::get ('/payment-modify', 	'PaymentController@modify')->name('payment.modify');
-Route::post('/payment-modify', 	'PaymentController@modify');
+Route::get('/course/{id}#tab3',    'CourseDashboardController@index')->name('courseDashboard3.index');
+Route::post('/course/{id}/result', 'CourseDashboardController@saveResult')->name('courseDashboard.saveResult')		->middleware('roles:teacher,admin');
 
-Route::get ('/salary',  	  	'SalaryController@index')->name('salary.index');
-Route::post('/salary',  	   	'SalaryController@modify')->name('salary.modify');
+Route::get('/payment/modify',  'PaymentController@modify')->name('payment.modify')	->middleware('roles:admin');
+Route::post('/payment/modify', 'PaymentController@modify')							->middleware('roles:admin');
 
-Route::get ('/contact', 	   	'ContactController@index')->name('contact.index');
-Route::post('/contact', 	   	'ContactController@contact')->name('contact.contact');
+Route::get('/payment/{id?}',   'PaymentController@enroll')->name('payment.enroll')	->middleware('roles:student');
+Route::post('/payment/{id?}',  'PaymentController@create')							->middleware('roles:student');
 
-Route::get ('/contact/{id}',   	'ContactController@content')->name('contact.content');
-Route::post('/contact/{id}',   	'ContactController@content');
-Route::post('/send',      	   	'ContactController@send')->name('contact.send');
+Route::get('/salary',  	   	  'SalaryController@index')->name('salary.index')	->middleware('roles:admin');
+Route::post('/salary',     	  'SalaryController@modify')->name('salary.modify')	->middleware('roles:admin');
 
-Route::get ('/popular-courses',	'ReportController@courses')->name('report.courses');
+Route::get('/report/popular-courses',  'ReportController@courses')->name('report.courses')->middleware('roles:admin');
 
-Route::get ('/student-history',	'ReportController@historyGet')->name('report.historyGet');
-Route::post('/student-history',	'ReportController@historyPost');
+Route::get('/report/student-history',  'ReportController@historyGet')->name('report.historyGet');
+Route::post('/report/student-history', 'ReportController@historyPost');
 
-Route::get ('/good-grades',		'ReportController@gradesGet')->name('report.gradesGet');
-Route::post('/good-grades',		'ReportController@gradesPost');
+Route::get('/report/good-grades',  	  'ReportController@gradesGet')->name('report.gradesGet')	->middleware('roles:teacher,admin');
+Route::post('/report/good-grades', 	  'ReportController@gradesPost')							->middleware('roles:teacher,admin');
+});

@@ -4,7 +4,7 @@
 
 						@section('main')
 
-						<form method="post" action="{{route('payment.modify')}}">
+						<form method="post">
 							@csrf
 							<table class="table">
 								<thead>
@@ -37,11 +37,11 @@
 								</thead>
 								<tbody>
 									<tr>
-										<form method="post" action="{{route('payment.modify')}}">
+										<form method="post">
 											@csrf
 											<td>
 												<input type="text" class="form-control" name="paymentId"  value="{{isset($find->id) ? $find->id : ''}}"/>
-												<button class="btn btn-primary" type="submit" name="find" value="Find">Find</button>
+												<button class="btn btn-primary btn-block mt-1" type="submit" name="find" value="find">Find</button>
 											</td>
 											<td>
 												<input type="text" class="form-control" name="courseId" value="{{isset($find->courseId) ? $find->courseId : ''}}" readonly/>
@@ -69,7 +69,8 @@
 												</select>
 											</td>
 											<td>
-												<button type="submit" class="btn btn-primary" name="update" value="update">Update</button>
+												<button type="submit" class="btn btn-primary btn-block" name="update" value="update">Update</button>
+												<button type="submit" class="btn btn-danger btn-block mt-1" name="delete" value="delete">Delete</button>
 											</td>
 										</form>
 									</tr>
@@ -79,6 +80,8 @@
 						</form>
 						
 						<h3>Recent Payments</h3>
+
+						@if(isset($payments))
 						<table class="table">
 							<thead>
 								<tr>
@@ -147,4 +150,9 @@
 							</tbody>
 						</table>
 						
+						@else
+						<h5>No recent payment found!</h5>
+
+						@endif
+
 						@endsection
