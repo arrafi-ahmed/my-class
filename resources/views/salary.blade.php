@@ -37,7 +37,7 @@
 							
 						@isset($teacher)
 						<div class="teacherInfo">
-							<img class="img-thumbnail d-inline-block mr-4 mb-3" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}">
+							<img class="img-thumbnail d-inline-block mr-4 mb-3" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profile_photo}}">
 							<div class="d-inline-block">
 								<b>Teacher ID:</b> {{ $teacher->id }}<br>
 								<b>Name:</b> {{ $teacher->name }}<br>
@@ -49,7 +49,7 @@
 						@endisset
 
 						@if(isset($salaries))
-						<div class="table-responsive">
+						<div class="table-responsive pt-3">
 							<table class="table">
 								<thead>
 									<tr>

@@ -21,7 +21,7 @@ class CourseDashboardController extends Controller
             $found = false;
             foreach ($validCourses as $validCourse) 
             {
-                if ($validCourse->courseId == $id) 
+                if ($validCourse->course_id == $id) 
                 {
                     $found = true; break;
                 }
@@ -29,7 +29,7 @@ class CourseDashboardController extends Controller
                 if ($found) 
                 {
                     $course         = DB::table('courses')->find($id);
-                    $teacher        = DB::table('teacher')->find($course->teacherId);
+                    $teacher        = DB::table('teacher')->find($course->teacher_id);
                     $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
                     $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
                     $studentResult  = DB::table('result') ->where('course_id', $id)
@@ -46,7 +46,7 @@ class CourseDashboardController extends Controller
         }
 
     	$course         = DB::table('courses')->find($id);
-    	$teacher        = DB::table('teacher')->find($course->teacherId);
+    	$teacher        = DB::table('teacher')->find($course->teacher_id);
         $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
         $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
         $results        = DB::table('result') ->where('course_id', $id)->get();

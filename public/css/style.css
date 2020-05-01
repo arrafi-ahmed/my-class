@@ -41,11 +41,50 @@
     height:  100vh;
 }
 .teacherInfo img{
-    max-width: 250px;
+    max-width: 200px;
+}
+.table-custom {
+    border: 1px solid #dee2e6;
 }
 .table-custom tr{
     border-bottom: 1px solid #dee2e6;
 }
 .table-custom tr:last-child{
     border-bottom: none;
+}
+
+@media (max-width: 991.98px) {
+.customList .btn{
+    width: 100%;
+}    
+.table td, .table th {
+    vertical-align: inherit;
+}
+}
+@media (max-width: 767.98px) {
+li.welcome{
+    position: absolute;
+    top: 0.5rem;
+    right: 6rem;
+}
+.topNav{
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+.topNav-link{
+    padding-left: 0.5rem;
+}
+.search{
+    padding-top: 0.5rem;
+}
+}
+
+@media (max-width: 575.98px) {
+.btn-search{
+    width: 100%;
+    margin-left: 0px!important;
+}
+.search{
+    margin-right: 0rem!important;
+}
 }

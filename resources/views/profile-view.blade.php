@@ -17,7 +17,7 @@
 							<tbody>
 								<tr>
 									<td>
-										<img src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}" class="img-thumbnail">	
+										<img src="{{url('/').'/upload/teacherPhoto/'.$teacher->profile_photo}}" class="img-thumbnail">	
 									</td>
 									<td>
 										<span>Name: </span><h5>{{$teacher->name}}</h5>
@@ -71,7 +71,7 @@
 							<tbody>
 								<tr>
 									<td>
-										<img src="{{url('/').'/upload/studentPhoto/'.$student->profilePhoto}}" class="img-thumbnail">	
+										<img src="{{url('/').'/upload/studentPhoto/'.$student->profile_photo}}" class="img-thumbnail">	
 									</td>
 									<td>
 										<span>Name: </span><h5>{{$student->name}}</h5>
@@ -98,7 +98,7 @@
 										Parent's Contact No: 	
 									</td>
 									<td>
-										{{$student->parentContact}}
+										{{$student->parent_contact}}
 									</td>
 								</tr>
 								<tr>

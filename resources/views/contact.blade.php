@@ -5,7 +5,7 @@
 						@section('main')
 
 						@if (isset($teachers))
-						<table class="table contact">
+						<table class="table table-responsive contact">
 							<tbody>
 								<tr>
 									<th>Photo</th>
@@ -18,7 +18,7 @@
 								
 								@foreach($teachers as $teacher)
 								<tr>
-									<td><img class="img-thumbnail" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}"></td>
+									<td><img class="img-thumbnail" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profile_photo}}"></td>
 									<td>{{$teacher->id}}</td>
 									<td>{{$teacher->name}}</td>
 									<td>{{$teacher->dept}}</td>

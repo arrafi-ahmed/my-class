@@ -6,7 +6,7 @@
 
 						<form method="post">
 							@csrf
-							<table class="table">
+							<table class="table table-responsive">
 								<thead>
 									<tr>
 										<th>
@@ -44,7 +44,7 @@
 												<button class="btn btn-primary btn-block mt-1" type="submit" name="find" value="find">Find</button>
 											</td>
 											<td>
-												<input type="text" class="form-control" name="courseId" value="{{isset($find->courseId) ? $find->courseId : ''}}" readonly/>
+												<input type="text" class="form-control" name="courseId" value="{{isset($find->course_id) ? $find->course_id : ''}}" readonly/>
 											</td>
 											<td>
 												<input type="text" class="form-control" name="fee" value="{{isset($find->fee) ? $find->fee : ''}}" readonly/>
@@ -56,7 +56,7 @@
 												<input type="text" class="form-control" name="method" value="{{isset($find->method) ? $find->method : ''}}" />
 											</td>
 											<td>
-												<input type="text" class="form-control" name="refNo" value="{{isset($find->refNo) ? $find->refNo : ''}}" />
+												<input type="text" class="form-control" name="refNo" value="{{isset($find->ref_no) ? $find->ref_no : ''}}" />
 											</td>
 											<td>
 												<select class="form-control" name="status">
@@ -82,7 +82,7 @@
 						<h3>Recent Payments</h3>
 
 						@if(isset($payments))
-						<table class="table">
+						<table class="table table-responsive">
 							<thead>
 								<tr>
 									<th>
@@ -127,10 +127,10 @@
 										{{$payment->method}}
 									</td>
 									<td>
-										{{$payment->studentId}}
+										{{$payment->student_id}}
 									</td>
 									<td>
-										{{$payment->courseId}}
+										{{$payment->course_id}}
 									</td>
 									<td>
 										{{$payment->name}}

@@ -6,63 +6,62 @@
 
 						@if(session('type') == 'admin')
 							
-							<table class="table table-bordered">
-								<tbody>
-									@foreach($data['table3'] as $row)
-									<td><h5>{{$row['text']}}&nbsp;&nbsp;&nbsp;&nbsp;{{$row['value']}}</h5></td>
-									@endforeach
-								</tbody>
-							</table>
+						<table class="table table-bordered">
+							<tbody>
+								@foreach($data['table3'] as $row)
+								<td><h5>{{$row['text']}}&nbsp;&nbsp;&nbsp;&nbsp;{{$row['value']}}</h5></td>
+								@endforeach
+							</tbody>
+						</table>
+						
+						<div class="row">
+							<div class="col-sm">
+								<table class="table table-borderless table-custom">
+									<thead class="thead-dark">
+										<tr>
+											<th>Lifetime:</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($data['table1'] as $row)
+										<tr>
+											<td>
+												{{$row['text']}}
+											</td>
+											<td>
+												{{$row['value']}}
+											</td>	
+										</tr>	
+										@endforeach
+										
+									</tbody>
+								</table>
+							</div>
 
-							<table class="table table-bordered table-custom">
-								<tbody>
-									<td>
-										<table class="table table-borderless">
-											<thead class="thead-dark">
-												<tr>
-													<th>Lifetime:</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach($data['table1'] as $row)
-												<tr>
-													<td>
-														{{$row['text']}}
-													</td>
-													<td>
-														{{$row['value']}}
-													</td>	
-												</tr>	
-												@endforeach
-												
-											</tbody>
-										</table>
-									</td>
-									<td>
-										<table class="table table-borderless">
-											<thead class="thead-dark">
-												<tr>
-													<th>Last 24 hours:</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach($data['table2'] as $row)
-												<tr>
-													<td>
-														{{$row['text']}}
-													</td>
-													<td>
-														{{$row['value']}}
-													</td>	
-												</tr>	
-												@endforeach
-											</tbody>
-										</table>
-									</td>
-								</tbody>
-							</table>
+							<div class="col-sm">
+								<table class="table table-borderless table-custom">
+									<thead class="thead-dark">
+										<tr>
+											<th>Last 24 hours:</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($data['table2'] as $row)
+										<tr>
+											<td>
+												{{$row['text']}}
+											</td>
+											<td>
+												{{$row['value']}}
+											</td>	
+										</tr>	
+										@endforeach
+									</tbody>
+								</table>
+							</div>	
+						</div>
 
 						@elseif(session('type') == 'teacher')
 

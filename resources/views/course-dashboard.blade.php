@@ -9,7 +9,7 @@
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-3">
-										<img alt="Bootstrap Image Preview" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profilePhoto}}" class="img-thumbnail"/>
+										<img alt="Bootstrap Image Preview" src="{{url('/').'/upload/teacherPhoto/'.$teacher->profile_photo}}" class="img-thumbnail"/>
 									</div>
 									<div class="col-md-9">
 										<h4>{{$course->name}} [{{$course->section}}]</h4>
@@ -38,7 +38,7 @@
 												{{$course->time}}	
 											</td>
 											<td>
-												{{$course->roomNo}}
+												{{$course->room_no}}
 											</td>
 											
 										</tr>
@@ -195,7 +195,7 @@
 											
 											@php $grade = null; $gradeId = null; $update = false; @endphp
 											@foreach($results as $result)
-												@if($result->studentId == $student->studentId)
+												@if($result->student_id == $student->student_id)
 
 													@php $grade = $result->result; $gradeId = $result->id; $update = true; break; @endphp
 
@@ -204,7 +204,7 @@
 											
 											<tr>
 												<td>
-													{{$student->studentId}}
+													{{$student->student_id}}
 												</td>
 												<td>
 													{{$student->name}}
@@ -215,7 +215,7 @@
 															@csrf
 															<div class="input-group mb-3">
 															  <input type="hidden" name="update" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$update}}">
-															  <input type="hidden" name="studentId" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$student->studentId}}">
+															  <input type="hidden" name="studentId" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$student->student_id}}">
 															  <input type="hidden" name="resultId" class="form-control" aria-label="Grade" aria-describedby="basic-addon2" value="{{$gradeId}}">
 															  <input type="text" name="grade" class="form-control" placeholder="Place Grade" aria-label="Grade" aria-describedby="basic-addon2" value="{{$grade}}">
 															  <div class="input-group-append">

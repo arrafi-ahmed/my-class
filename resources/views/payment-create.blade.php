@@ -9,7 +9,7 @@
 						<h4>Make Payment</h4>
 						<form method="post">
 							@csrf
-							<table class="table">
+							<table class="table table-responsive">
 								<thead>
 									<tr>
 										<th>
@@ -64,7 +64,7 @@
 						<h4>Recent Payments</h4>
 
 						@if(count($payments)>0)
-						<table class="table">
+						<table class="table table-responsive">
 							<thead>
 								<tr>
 									<th>
@@ -106,7 +106,7 @@
 										{{$payment->method}}
 									</td>
 									<td>
-										{{$payment->courseId}}
+										{{$payment->course_id}}
 									</td>
 									<td>
 										{{$payment->name}}

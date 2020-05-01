@@ -5,7 +5,7 @@
 						@section('main')
 
 						@if(isset($teachers))
-						<table class="table">
+						<table class="table table-responsive customList">
 							<thead>
 								<tr>
 									<th>

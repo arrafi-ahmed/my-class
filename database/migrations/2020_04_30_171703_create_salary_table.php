@@ -14,7 +14,7 @@ class CreateSalaryTable extends Migration
     public function up()
     {
         Schema::create('salary', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->autoIncrement();
             $table->integer('amount');
             $table->dateTime('date', 0)->useCurrent();
             $table->boolean('status');

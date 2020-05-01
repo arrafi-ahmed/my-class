@@ -9,7 +9,7 @@
 							<div class="input-group pt-3 pb-3">
 								<label class="input-group-text" for="inputGroupSelect01">Course ID: </label>
 
-								<input type="text" name="courseId" value="{{isset($results) ? $results[0]->courseId : '' }}" class="form-control">
+								<input type="text" name="courseId" value="{{isset($results) ? $results[0]->course_id : '' }}" class="form-control">
 								
 								<div class="input-group-append">
 							    	<button class="btn btn-primary" type="submit" name="generate" value="generate">Generate</button>
@@ -29,8 +29,8 @@
 								<h5 class="pt-1 pb-2">Amount of students: @php echo count($results); @endphp</h5>
 								@foreach($results as $result)
 								<tr>
-									<td>{{$result->courseId}}</td>
-									<td>{{$result->studentId}}</td>
+									<td>{{$result->course_id}}</td>
+									<td>{{$result->student_id}}</td>
 									<td>{{$result->result}}</td>
 								</tr>
 								@endforeach

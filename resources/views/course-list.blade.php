@@ -11,7 +11,7 @@
 						@endif
 
 						@if(isset($courses))
-						<table class="table">
+						<table class="table table-responsive customList">
 							<thead>
 								<tr>
 									<th>
@@ -50,7 +50,7 @@
 										{{$course->section}}
 									</td>
 									<td>
-										{{$course->teacherId}}
+										{{$course->teacher_id}}
 									</td>
 									<td>
 										{{$course->status == 0 ? "Closed" : "Open" }}
@@ -65,9 +65,9 @@
 											@php $found=0; $btn = "primary" @endphp
 
 											@foreach ($enrolled as $enroll)
-												@if(($enroll->courseId == $course->id) && ($enroll->status))
+												@if(($enroll->course_id == $course->id) && ($enroll->status))
 													@php $found = 1; $btn = "success"; break; @endphp
-												@elseif(($enroll->courseId == $course->id) && (!$enroll->status))
+												@elseif(($enroll->course_id == $course->id) && (!$enroll->status))
 													@php $found = 2; $btn = "warning"; break; @endphp
 												@endif
 											@endforeach

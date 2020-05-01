@@ -141,7 +141,7 @@ class CourseListController extends Controller
             'time'      => 'required|max:20',
             'roomNo'    => 'required|max:10',
             'capacity'  => 'required|max:999|numeric',
-            'teacherId '=> 'required|max:10|exists:teacher,id',
+            'teacherId' => 'required|max:10|exists:teacher,id',
             'fee'       => 'required|max:99999|numeric'
         ]);
         

@@ -37,7 +37,7 @@
 									<tr>
 										<td>Room No</td>
 										<td>
-											<input name="roomNo" type="text" class="form-control" value="{{$course->roomNo}}"/>
+											<input name="roomNo" type="text" class="form-control" value="{{$course->room_no}}"/>
 										</td>
 									</tr>
 									<tr>
@@ -50,7 +50,7 @@
 									<tr>
 										<td>Teacher Id</td>
 										<td>
-											<input name="teacherId" type="text" class="form-control" value="{{$course->teacherId}}"/>
+											<input name="teacherId" type="text" class="form-control" value="{{$course->teacher_id}}"/>
 										</td>
 									</tr>
 									<tr>

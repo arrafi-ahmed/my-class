@@ -14,7 +14,7 @@ class CreateNoticeTable extends Migration
     public function up()
     {
         Schema::create('notice', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->autoIncrement();
             $table->string('content', 2000);
             $table->integer('course_id');
             $table->dateTime('date', 0)->useCurrent();

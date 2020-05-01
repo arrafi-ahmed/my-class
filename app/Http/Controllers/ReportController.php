@@ -67,7 +67,7 @@ class ReportController extends Controller
 										   ->select('teacher_id')
 										   ->first();
 
-    		if (isset($course) && $course->teacherId == session('id')) 
+    		if (isset($course) && $course->teacher_id == session('id')) 
     		{
                 $this->validate($req, [
                     'courseId' => 'required|exists:courses,id'

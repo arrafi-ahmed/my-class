@@ -13,7 +13,7 @@
 								<input type="text" name="studentId" value="{{ session('id') }}" class="form-control" readonly>
 
 								@else
-								<input type="text" name="studentId" value="{{isset($histories) ? $histories[0]->studentId : '' }}" class="form-control">
+								<input type="text" name="studentId" value="{{isset($histories) ? $histories[0]->student_id : '' }}" class="form-control">
 								@endif
 								
 								<div class="input-group-append">
@@ -23,7 +23,7 @@
 						</form>
 
 						@if(isset($histories))
-						<table class="table">
+						<table class="table table-responsive">
 							<tbody>
 								<tr>
 									<th>Course ID</th>
@@ -35,10 +35,10 @@
 
 								@foreach($histories as $history)
 								<tr>
-									<td>{{$history->courseId}}</td>
+									<td>{{$history->course_id}}</td>
 									<td>{{$history->name}}</td>
 									<td>{{$history->section}}</td>
-									<td>{{$history->teacherId}}</td>
+									<td>{{$history->teacher_id}}</td>
 									<td>{{$history->result}}</td>
 								</tr>
 								@endforeach

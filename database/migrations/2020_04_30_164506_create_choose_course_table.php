@@ -14,7 +14,7 @@ class CreateChooseCourseTable extends Migration
     public function up()
     {
         Schema::create('choose_course', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->autoIncrement();
             $table->integer('course_id');
             $table->string('student_id', 20);
         });
