@@ -14,10 +14,10 @@ class CreateResultTable extends Migration
     public function up()
     {
         Schema::create('result', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->primary();
             $table->string('result', 3);
-            $table->integer('courseId');
-            $table->string('studentId', 20);
+            $table->integer('course_id');
+            $table->string('student_id', 20);
         });
     }
 

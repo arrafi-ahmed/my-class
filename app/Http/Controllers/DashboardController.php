@@ -61,7 +61,7 @@ class DashboardController extends Controller
 
     	elseif (session('type') == "teacher") 
     	{
-    		$courses = DB::table('courses') -> where('teacherId', session('id'))
+    		$courses = DB::table('courses') -> where('teacher_id', session('id'))
 									    	-> where('status', 1)
 									    	-> get();
 
@@ -81,7 +81,7 @@ class DashboardController extends Controller
     		$studentId = session('id');
     		
             $courses = DB::table('courses')->join('payment', function($join){
-                                      $join->on('courses.id', '=', 'payment.courseId')
+                                      $join->on('courses.id', '=', 'payment.course_id')
                                            ->where('payment.status', '=', 1);
                                          })->select('courses.*', 'payment.status as pstatus')
                                            ->orderBy('payment.status','desc')

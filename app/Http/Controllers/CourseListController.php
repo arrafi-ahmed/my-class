@@ -15,8 +15,8 @@ class CourseListController extends Controller
         {
             $studentId = session('id');
             // $enrolled = DB::table('courses')->whereIn('id', function($query) use($studentId){$query->select('courseId')->from('choose_course')->where('studentId', $studentId);->get();
-            $enrolled = DB::table('payment')->select('courseId', 'status')
-                                            ->where('studentId', session('id'))
+            $enrolled = DB::table('payment')->select('course_id', 'status')
+                                            ->where('student_id', session('id'))
                                             ->get();
 
             if (count($courses)>0) {
@@ -109,9 +109,9 @@ class CourseListController extends Controller
             ['name'     => $req->name, 
             'section'   => $req->section,
             'time'      => $req->time,
-            'roomNo'    => $req->roomNo,
+            'room_no'   => $req->roomNo,
             'capacity'  => $req->capacity,
-            'teacherId' => $req->teacherId,
+            'teacher_id'=> $req->teacherId,
             'fee'       => $req->fee,
             'status'    => 0]
         );
@@ -141,7 +141,7 @@ class CourseListController extends Controller
             'time'      => 'required|max:20',
             'roomNo'    => 'required|max:10',
             'capacity'  => 'required|max:999|numeric',
-            'teacherId' => 'required|max:10|exists:teacher,id',
+            'teacherId '=> 'required|max:10|exists:teacher,id',
             'fee'       => 'required|max:99999|numeric'
         ]);
         
@@ -149,9 +149,9 @@ class CourseListController extends Controller
                                           ->update(['name'      => $req->name, 
                                                     'section'   => $req->section,
                                                     'time'      => $req->time,
-                                                    'roomNo'    => $req->roomNo,
+                                                    'room_no'   => $req->roomNo,
                                                     'capacity'  => $req->capacity,
-                                                    'teacherId' => $req->teacherId,
+                                                    'teacher_id'=> $req->teacherId,
                                                     'fee'       => $req->fee]);
         
         if ($editCourse) 

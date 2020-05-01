@@ -21,7 +21,7 @@ class CreateTeacherTable extends Migration
             $table->string('qualification', 100);
             $table->string('email', 50);
             $table->integer('salary');
-            $table->string('profilePhoto', 50);
+            $table->string('profile_photo', 50);
             $table->boolean('valid');
         });
     }

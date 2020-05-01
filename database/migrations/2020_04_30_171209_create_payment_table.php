@@ -14,14 +14,14 @@ class CreatePaymentTable extends Migration
     public function up()
     {
         Schema::create('payment', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->primary();
             $table->integer('amount');
             $table->string('method', 20);
-            $table->string('refNo', 50);
-            $table->integer('courseId');
+            $table->string('ref_no', 50);
+            $table->integer('course_id');
             $table->dateTime('date', 0)->useCurrent();
             $table->boolean('status');
-            $table->string('studentId', 20);
+            $table->string('student_id', 20);
         });
     }
 

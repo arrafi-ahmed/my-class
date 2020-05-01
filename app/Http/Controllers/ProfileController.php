@@ -123,7 +123,7 @@ class ProfileController extends Controller
                                             ->update(['password'    => $req->password,
                                                     'name'          => $req->name,
                                                     'dept'          => $req->dept,
-                                                    'parentContact' => $req->parentContact,
+                                                    'parent_contact'=> $req->parentContact,
                                                     'email'         => $req->email]);
                                                     //'profilePhoto' => $req->profilePhoto
             if ($update) 

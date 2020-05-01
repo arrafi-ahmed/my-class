@@ -14,9 +14,9 @@ class CreateNoteTable extends Migration
     public function up()
     {
         Schema::create('note', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->primary();
             $table->string('filename', 50);
-            $table->integer('courseId');
+            $table->integer('course_id');
             $table->dateTime('date', 0)->useCurrent();
             $table->float('size', 3, 2);
         });

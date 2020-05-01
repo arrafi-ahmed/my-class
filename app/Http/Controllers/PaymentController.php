@@ -16,8 +16,8 @@ class PaymentController extends Controller
 	    								  ->select('count', 'capacity', 'status')
 	    								  ->first();
 
-		    $payment = DB::table('payment') ->where('payment.courseId', $id)
-											->where('payment.studentId', session('id'))
+		    $payment = DB::table('payment') ->where('payment.course_id', $id)
+											->where('payment.student_id', session('id'))
 											->first();
 
 			if(!isset($course))
@@ -51,8 +51,8 @@ class PaymentController extends Controller
 		$studentId = session('id');
 		$payments = DB::table('payment') -> join('courses', function($join) use ($studentId)
 											{
-												$join-> on('payment.courseId', '=', 'courses.id')
-													 -> where('payment.studentId', '=', $studentId);
+												$join-> on('payment.course_id', '=', 'courses.id')
+													 -> where('payment.student_id', '=', $studentId);
 											})
 										 -> select('payment.*', 'courses.name', 'courses.section')
 										 -> orderBy('payment.id', 'desc')
@@ -82,13 +82,13 @@ class PaymentController extends Controller
     	//insert into tables
     	$payment = DB::table('payment') -> insert(['amount' 	=> $req->amount,
     											   'method' 	=> $req->method,
-    											   'refNo'  	=> $req->refNo,
-    											   'courseId' 	=> $req->courseId,
+    											   'ref_no'  	=> $req->refNo,
+    											   'course_id' 	=> $req->courseId,
     											   'status' 	=> 0,
-    											   'studentId' 	=> session('id')]); 
+    											   'student_id' => session('id')]); 
 
-    	$choose_course = DB::table('choose_course') -> insert(['courseId' 	=> $req->courseId,
-			    											   'studentId' 	=> session('id')]); 
+    	$choose_course = DB::table('choose_course') -> insert(['course_id' 	=> $req->courseId,
+			    											   'student_id' => session('id')]); 
 
     	$updateCount = DB::table('courses') -> where('id', $req->courseId)
 											->update(['count' => $course->count + 1]);
@@ -96,8 +96,8 @@ class PaymentController extends Controller
 		$studentId = session('id');
 		$payments = DB::table('payment') -> join('courses', function($join) use ($studentId)
 											{
-												$join-> on('payment.courseId', '=', 'courses.id')
-													 -> where('payment.studentId', '=', $studentId);
+												$join-> on('payment.course_id', 	'=', 'courses.id')
+													 -> where('payment.student_id', '=', $studentId);
 											})
 										 -> select('payment.*', 'courses.name', 'courses.section')
 										 -> orderBy('payment.id', 'desc')
@@ -131,14 +131,14 @@ class PaymentController extends Controller
     			$update = DB::table('payment') -> where('id', $req->paymentId)
     										   -> update(['amount' => $req->amount,
     										   			  'method' => $req->method,
-    										   			  'refNo'  => $req->refNo,
+    										   			  'ref_no' => $req->refNo,
     										   			  'status' => $req->status ]);
     		}
 
 			$paymentId = $req->paymentId;
 			$find = DB::table('payment')-> join('courses', function($join) use ($paymentId)
 											{
-												$join-> on('payment.courseId', '=', 'courses.id')
+												$join-> on('payment.course_id', '=', 'courses.id')
 												 	 -> where('payment.id', '=', $paymentId);
 											})
 											-> select('payment.*', 'courses.fee')
@@ -171,7 +171,7 @@ class PaymentController extends Controller
 			}
 		}
 
-		$payments = DB::table('payment')-> join('courses', 'payment.courseId', '=', 'courses.id')
+		$payments = DB::table('payment')-> join('courses', 'payment.course_id', '=', 'courses.id')
     								    -> select('payment.*', 'courses.name', 'courses.section')
     								    -> orderBy('payment.id', 'desc')
     								    -> limit(100)

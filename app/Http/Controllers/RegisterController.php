@@ -58,7 +58,7 @@ class RegisterController extends Controller
             'qualification'  => $req->qualification,
             'email'          => $req->email,
             'salary'         => $req->salary,
-            'profilePhoto'   => $profilePhoto,
+            'profile_photo'  => $profilePhoto,
             'valid'          => 0]
         );
 
@@ -107,9 +107,9 @@ class RegisterController extends Controller
             'password'      => $req->password,
             'name'          => $req->name,
             'dept'          => $req->dept,
-            'parentContact' => $req->parentContact,
+            'parent_contact'=> $req->parentContact,
             'email'         => $req->email,
-            'profilePhoto'  => $profilePhoto,
+            'profile_photo' => $profilePhoto,
             'valid'         => 0]
         );
 

@@ -14,11 +14,11 @@ class CreateSalaryTable extends Migration
     public function up()
     {
         Schema::create('salary', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->primary();
             $table->integer('amount');
             $table->dateTime('date', 0)->useCurrent();
             $table->boolean('status');
-            $table->string('teacherId', 20);
+            $table->string('teacher_id', 20);
         });
     }
 

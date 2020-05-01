@@ -12,11 +12,11 @@ class CourseDashboardController extends Controller
         if (session('type') =='student') 
         {
             $studentId = session('id');
-            $validCourses       = DB::table('student')->join('payment', function($join) use($studentId){
-                                         $join->on('student.id', '=', 'payment.studentId')
-                                              ->where('payment.studentId', '=', $studentId)
-                                              ->where('payment.status', '=', 1);
-                                            })->get();
+            $validCourses = DB::table('student')  ->join('payment', function($join) use($studentId){
+                                             $join->on('student.id', '=', 'payment.student_id')
+                                                  ->where('payment.student_id', '=', $studentId)
+                                                  ->where('payment.status', '=', 1);
+                                                })->get();
             
             $found = false;
             foreach ($validCourses as $validCourse) 
@@ -30,10 +30,10 @@ class CourseDashboardController extends Controller
                 {
                     $course         = DB::table('courses')->find($id);
                     $teacher        = DB::table('teacher')->find($course->teacherId);
-                    $notices        = DB::table('notice') ->where('courseId', $course->id)->get();
-                    $notes          = DB::table('note')   ->where('courseId', $course->id)->get();
-                    $studentResult  = DB::table('result') ->where('courseId', $id)
-                                                          ->where('studentId',session('id'))
+                    $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
+                    $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
+                    $studentResult  = DB::table('result') ->where('course_id', $id)
+                                                          ->where('student_id',session('id'))
                                                           ->first();
                     return view('course-dashboard', ['course'=>$course, 'teacher'=>$teacher, 'studentResult'=>$studentResult, 'notices'=>$notices, 'notes'=>$notes]);
                 }
@@ -47,13 +47,13 @@ class CourseDashboardController extends Controller
 
     	$course         = DB::table('courses')->find($id);
     	$teacher        = DB::table('teacher')->find($course->teacherId);
-        $notices        = DB::table('notice') ->where('courseId', $course->id)->get();
-        $notes          = DB::table('note')   ->where('courseId', $course->id)->get();
-        $results        = DB::table('result') ->where('courseId', $id)->get();
+        $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
+        $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
+        $results        = DB::table('result') ->where('course_id', $id)->get();
         
         $students       = DB::table('student')->join('payment', function($join) use($id){
-                                         $join->on('student.id', '=', 'payment.studentId')
-                                              ->where('payment.courseId', '=', $id)
+                                         $join->on('student.id', '=', 'payment.student_id')
+                                              ->where('payment.course_id', '=', $id)
                                               ->where('payment.status', '=', 1);
                                             })->get();
         
@@ -65,7 +65,7 @@ class CourseDashboardController extends Controller
     	if(session('type') == 'admin' || session('type') == 'teacher')
         {
             $insert = DB::table('notice')->insert(["content" =>$req->content,
-                                                     "courseId"=>$id]);
+                                                   "course_id"=>$id]);
             if ($insert) 
             {
                 return redirect()->route('courseDashboard1.index', $id)->with('success', 'Notice created succesfully!');
@@ -98,7 +98,7 @@ class CourseDashboardController extends Controller
                 if ($file->move('upload/note/', $filename))
                 {
                     $insert = DB::table('note')->insert(["filename" =>$filename,
-                                                         "courseId" =>$id,
+                                                         "course_id"=>$id,
                                                          "size"     =>$sizeMB]);
                     if ($insert) {
                         return redirect()->route('courseDashboard2.index', $id)->with('success', 'Note uploaded succesfully!');
@@ -138,8 +138,8 @@ class CourseDashboardController extends Controller
         {
             $update = DB::table('result')->where('id', $req->resultId)
                                          ->update(['result'    =>$req->grade,
-                                                   'courseId'  =>$req->id,
-                                                   'studentId' =>$req->studentId]);
+                                                   'course_id'  =>$req->id,
+                                                   'student_id' =>$req->studentId]);
             if ($update) 
             {
                 return redirect()->route('courseDashboard3.index', $id)->with('success', 'Result saved successfully!');   
@@ -154,8 +154,8 @@ class CourseDashboardController extends Controller
         else
         {
             $insert = DB::table('result')->insert(['result'    =>$req->grade,
-                                                   'courseId'  =>$req->id,
-                                                   'studentId' =>$req->studentId]);
+                                                   'course_id'  =>$req->id,
+                                                   'student_id' =>$req->studentId]);
             if ($insert) 
             {
                 return redirect()->route('courseDashboard3.index', $id)->with('success', 'Result saved successfully!');

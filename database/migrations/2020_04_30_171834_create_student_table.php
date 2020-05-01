@@ -18,9 +18,9 @@ class CreateStudentTable extends Migration
             $table->string('password', 50);
             $table->string('name', 50);
             $table->string('dept', 50);
-            $table->string('parentContact', 50);
+            $table->string('parent_contact', 50);
             $table->string('email', 50);
-            $table->string('profilePhoto', 50);
+            $table->string('profile_photo', 50);
             $table->boolean('valid');
         });
     }

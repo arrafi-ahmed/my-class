@@ -25,13 +25,13 @@ class SalaryController extends Controller
             
             if (isset($req->pay) && isset($teacher))
             {
-                $pay = DB::table('salary')->insert(['amount'   =>$teacher->salary,
-                                             'status'   =>1,
-                                             'teacherId'=>$req->teacherId]);
+                $pay = DB::table('salary')->insert(['amount'     =>$teacher->salary,
+                                                     'status'    =>1,
+                                                     'teacher_id'=>$req->teacherId]);
 
-                $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
-                                           ->orderBy('id', 'desc')
-                                           ->get();
+                $salaries = DB::table('salary')->where('teacher_id', $req->teacherId)
+                                               ->orderBy('id', 'desc')
+                                               ->get();
             
                 if(count($salaries)<0 && $pay)
                 {
@@ -66,12 +66,12 @@ class SalaryController extends Controller
                 ]);
 
                 $save = DB::table('salary') ->where('id', $req->salaryId)
-                                    ->update(['amount'  =>$req->amount,
-                                              'status'   =>$req->status]);
+                                            ->update(['amount'  =>$req->amount,
+                                                      'status'  =>$req->status]);
 
-                $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
-                       ->orderBy('id', 'desc')
-                       ->get();
+                $salaries = DB::table('salary')->where('teacher_id', $req->teacherId)
+                                               ->orderBy('id', 'desc')
+                                               ->get();
             
                 if(count($salaries)<0 && $save)
                 {
@@ -99,9 +99,9 @@ class SalaryController extends Controller
                 }   
             }
 
-            $salaries = DB::table('salary')->where('teacherId', $req->teacherId)
-                       ->orderBy('id', 'desc')
-                       ->get();
+            $salaries = DB::table('salary')->where('teacher_id', $req->teacherId)
+                                           ->orderBy('id', 'desc')
+                                           ->get();
 
             if (count($salaries)>0)
             {

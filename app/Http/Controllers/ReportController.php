@@ -9,11 +9,12 @@ class ReportController extends Controller
 {
     public function courses()
     {
-    	$courses = DB::table('choose_course')->join('courses', 'choose_course.courseId','=','courses.id')
-											 ->select(DB::raw('courses.name, choose_course.courseId, count(choose_course.courseId) number'))
-											 ->groupBy('choose_course.courseId','courses.name')
-											 ->orderBy('number', 'desc')
-											 ->get();
+
+        $courses = DB::table('choose_course')->join('courses', 'choose_course.course_id','=','courses.id')
+                                             ->select(DB::raw('courses.name, choose_course.course_id, count(choose_course.course_id) number'))
+                                             ->groupBy('choose_course.course_id','courses.name')
+                                             ->orderBy('number', 'desc')
+                                             ->get();
 
 		if (count($courses)>0) 
         {
@@ -37,9 +38,9 @@ class ReportController extends Controller
             'studentId' => 'required|exists:student,id'
         ]);
 
-    	$histories = DB::table('result')->join('courses', 'result.courseId', '=', 'courses.id')
-    								    ->select('result.*', 'courses.name', 'courses.section', 'courses.teacherId')
-    								    ->where('studentId', $req->studentId)
+    	$histories = DB::table('result')->join('courses', 'result.course_id', '=', 'courses.id')
+    								    ->select('result.*', 'courses.name', 'courses.section', 'courses.teacher_id')
+    								    ->where('student_id', $req->studentId)
     								    ->get();
 
 	    if (count($histories)>0) 
@@ -62,8 +63,8 @@ class ReportController extends Controller
     {
     	if ($req->session()->get('type') == "teacher") 
     	{
-            $course = DB::table('courses')->where('id', $req->courseId)
-										   ->select('teacherId')
+            $course = DB::table('courses') ->where('id', $req->courseId)
+										   ->select('teacher_id')
 										   ->first();
 
     		if (isset($course) && $course->teacherId == session('id')) 
@@ -72,7 +73,7 @@ class ReportController extends Controller
                     'courseId' => 'required|exists:courses,id'
                 ]);
 
-    			$results = DB::table('result')->where([['courseId', '=', $req->courseId],
+    			$results = DB::table('result')->where([['course_id', '=', $req->courseId],
 													   ['result', 	'like', 'A%']])
     										  ->orderBy('result', 'desc')
 										 	  ->get();
@@ -99,7 +100,7 @@ class ReportController extends Controller
                 'courseId' => 'required|exists:courses,id'
             ]);
 
-    		$results = DB::table('result')->where([['courseId', '=', $req->courseId],
+    		$results = DB::table('result')->where([['course_id', '=', $req->courseId],
 												   ['result', 	'like', 'A%']])
     									  ->orderBy('result', 'desc')
 										  ->get();
