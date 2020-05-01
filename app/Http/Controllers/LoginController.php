@@ -30,13 +30,20 @@ class LoginController extends Controller
         return view('login');
     }
 
+    public function messages()
+    {
+        return [
+            'exists' => 'Incorrect :attribute'
+        ];
+    }
+    
     public function login(Request $req)
     {
         if ($req->role == "teacher") 
         {
             $this->validate($req, [
-                'id'        => 'required|exists:teacher',
-                'password'  => 'required|exists:teacher'
+                'id'        => 'required',
+                'password'  => 'required'
             ]);
 
             $loginTeacher = DB::table('teacher') -> where('id', $req->id)
@@ -54,15 +61,15 @@ class LoginController extends Controller
 
             else
             {
-                return redirect()->route('login.index')->with('error', 'Error logging in!');
+                return redirect()->route('login.index')->with('error', 'Incorrect id/password.');
             }
         }
 
         elseif ($req->role == "student") 
         {
             $this->validate($req, [
-                'id'        => 'required|exists:student',
-                'password'  => 'required|exists:student'
+                'id'        => 'required',
+                'password'  => 'required'
             ]);
 
             $loginStudent = DB::table('student') -> where('id', $req->id)
@@ -80,17 +87,17 @@ class LoginController extends Controller
 
             else
             {
-                return redirect()->route('login.index')->with('error', 'Error logging in!');
+                return redirect()->route('login.index')->with('error', 'Incorrect id/password.');
             }
         }
 
         elseif ($req->role == "admin") 
         {
             $this->validate($req, [
-                'id'        => 'required|exists:admin',
-                'password'  => 'required|exists:admin'
+                'id'        => 'required',
+                'password'  => 'required'
             ]);
-            
+
             $loginAdmin = DB::table('admin') -> where('id', $req->id)
                                              -> where('password', $req->password)
                                              -> first();
@@ -105,7 +112,7 @@ class LoginController extends Controller
 
             else
             {
-                return redirect()->route('login.index')->with('error', 'Error logging in!');
+                return redirect()->route('login.index')->with('error', 'Incorrect id/password.');
             }
         }
     }

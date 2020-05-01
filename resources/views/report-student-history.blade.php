@@ -23,28 +23,30 @@
 						</form>
 
 						@if(isset($histories))
-						<table class="table table-responsive">
-							<tbody>
-								<tr>
-									<th>Course ID</th>
-									<th>Course Name</th>
-									<th>Section</th>
-									<th>Teacher ID</th>
-									<th>Result</th>
-								</tr>
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>Course ID</th>
+										<th>Course Name</th>
+										<th>Section</th>
+										<th>Teacher ID</th>
+										<th>Result</th>
+									</tr>
 
-								@foreach($histories as $history)
-								<tr>
-									<td>{{$history->course_id}}</td>
-									<td>{{$history->name}}</td>
-									<td>{{$history->section}}</td>
-									<td>{{$history->teacher_id}}</td>
-									<td>{{$history->result}}</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-
+									@foreach($histories as $history)
+									<tr>
+										<td>{{$history->course_id}}</td>
+										<td>{{$history->name}}</td>
+										<td>{{$history->section}}</td>
+										<td>{{$history->teacher_id}}</td>
+										<td>{{$history->result}}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+						
 						@elseif(!isset($histories) && request('generate'))
 						<h5>No record found!</h5>
 

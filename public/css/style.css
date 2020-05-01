@@ -1,3 +1,7 @@
+.container-fluid{
+    margin: 0 auto;
+    max-width: 1400px;
+}
 .pt-6 {
     padding-top: 5rem!important;
 }

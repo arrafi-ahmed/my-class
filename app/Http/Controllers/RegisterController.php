@@ -38,6 +38,8 @@ class RegisterController extends Controller
             'email'         => 'required|email',
             'salary'        => 'required|numeric',
             'profilePhoto'  => 'file|image'
+        ],[
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one numerical digit & one special character.'
         ]);
 
         $profilePhoto = "default.jpg";
@@ -88,6 +90,8 @@ class RegisterController extends Controller
             'parentContact' => 'required',
             'email'         => 'required|email',
             'profilePhoto'  => 'file|image'
+        ],[
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one numerical digit & one special character.'
         ]);
         
         $profilePhoto = "default.jpg";
