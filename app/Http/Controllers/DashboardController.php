@@ -82,7 +82,8 @@ class DashboardController extends Controller
     		
             $courses = DB::table('courses')->join('payment', function($join){
                                       $join->on('courses.id', '=', 'payment.course_id')
-                                           ->where('payment.status', '=', 1);
+                                           ->where('payment.status', '=', 1)
+                                           ->where('payment.student_id', '=', session('id'));
                                          })->select('courses.*', 'payment.status as pstatus')
                                            ->orderBy('payment.status','desc')
                                            ->get();

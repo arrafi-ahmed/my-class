@@ -13,9 +13,9 @@ class CourseDashboardController extends Controller
         {
             $studentId = session('id');
             $validCourses = DB::table('student')  ->join('payment', function($join) use($studentId){
-                                             $join->on('student.id', '=', 'payment.student_id')
-                                                  ->where('payment.student_id', '=', $studentId)
-                                                  ->where('payment.status', '=', 1);
+                                             $join->on('student.id', 'payment.student_id')
+                                                  ->where('payment.student_id', $studentId)
+                                                  ->where('payment.status', 1);
                                                 })->get();
             
             $found = false;
@@ -25,23 +25,23 @@ class CourseDashboardController extends Controller
                 {
                     $found = true; break;
                 }
+            }
 
-                if ($found) 
-                {
-                    $course         = DB::table('courses')->find($id);
-                    $teacher        = DB::table('teacher')->find($course->teacher_id);
-                    $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
-                    $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
-                    $studentResult  = DB::table('result') ->where('course_id', $id)
-                                                          ->where('student_id',session('id'))
-                                                          ->first();
-                    return view('course-dashboard', ['course'=>$course, 'teacher'=>$teacher, 'studentResult'=>$studentResult, 'notices'=>$notices, 'notes'=>$notes]);
-                }
+            if ($found) 
+            {
+                $course         = DB::table('courses')->find($id);
+                $teacher        = DB::table('teacher')->find($course->teacher_id);
+                $notices        = DB::table('notice') ->where('course_id', $course->id)->get();
+                $notes          = DB::table('note')   ->where('course_id', $course->id)->get();
+                $studentResult  = DB::table('result') ->where('course_id', $id)
+                                                      ->where('student_id',session('id'))
+                                                      ->first();
+                return view('course-dashboard', ['course'=>$course, 'teacher'=>$teacher, 'studentResult'=>$studentResult, 'notices'=>$notices, 'notes'=>$notes]);
+            }
 
-                else
-                {
-                    return back()->with('error', 'Access denied!');
-                }
+            else
+            {
+                return back()->with('error', 'Access denied!');
             }
         }
 

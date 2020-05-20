@@ -6,7 +6,8 @@
 
 							<form method="post" action="{{route('profile.search')}}" class="search form-inline mt-2 mr-5 mt-md-0">
 								@csrf
-								<input required name="searchId" value="{{ isset($teacher->id) ? $teacher->id : (isset($student->id) ? $student->id : '' )}}" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID">
+								<!-- <input required name="searchId" value="{{ isset($teacher->id) ? $teacher->id : (isset($student->id) ? $student->id : '' )}}" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID"> -->
+								<input required name="searchId" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID">
 								<select class="custom-select" name="type">
 								    <option value="teacher">Teacher</option>
 								    <option value="student">Student</option>
@@ -22,7 +23,8 @@
 
 							<form method="post" action="{{route('profile.search')}}" class="search form-inline mt-2 mr-5 mt-md-0">
 								@csrf
-								<input required name="searchId" value="{{ isset($teacher->id) ? $teacher->id : (isset($student->id) ? $student->id : '' )}}" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID">
+								<!-- <input required name="searchId" value="{{ isset($teacher->id) ? $teacher->id : (isset($student->id) ? $student->id : '' )}}" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID"> -->
+								<input required name="searchId" type="text" aria-label="Search" class="form-control mr-sm-2" placeholder="Search by ID">
 								<select class="custom-select" name="type">
 								    <option value="teacher">Teacher</option>
 								    <option value="student">Student</option>
