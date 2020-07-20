@@ -43,6 +43,10 @@
 													<button type="submit" class="btn btn-primary btn-block">
 														Login
 													</button>
+
+													<a class="demo" data-toggle="modal" href="#modal-container" id="modal">
+			                                            <span class="h6 d-block">Demo Account</span>
+			                                        </a>
 												</td>
 											</tr>
 										</tbody>
@@ -52,4 +56,36 @@
 							</div>
 						</div>
 						
+						<!-- demo modal -->
+                        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="modal-container" role="dialog">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel">Demo Credentials</h5>
+                                        <button class="close" data-dismiss="modal" type="button" onclick = "$('.modal').hide()"><span aria-hidden="true">×</span></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>
+                                            <b>Demo Student:</b><br>
+                                            <span>ID: student1</span><br>
+                                            <span>PASSWORD: aA11!</span>
+                                        </p> 
+                                        <p>
+                                            <b>Demo Teacher:</b><br>
+                                            <span>ID: teacher1</span><br>
+                                            <span>PASSWORD: aA11!</span>
+                                        </p> 
+                                        <p>
+                                            <b>Demo Admin:</b><br>
+                                            <span>ID: admin1</span><br>
+                                            <span>PASSWORD: aA11!</span>
+                                        </p> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
 						@endsection
