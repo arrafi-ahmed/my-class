@@ -45,7 +45,7 @@
 													</button>
 
 													<a class="demo" data-toggle="modal" href="#modal-container" id="modal">
-			                                            <span class="h6 d-block">Demo Account</span>
+			                                            <span class="h6 d-block text-center pt-2">Demo Account</span>
 			                                        </a>
 												</td>
 											</tr>
